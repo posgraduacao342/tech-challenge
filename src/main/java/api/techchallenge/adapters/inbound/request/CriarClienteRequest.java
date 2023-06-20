@@ -8,7 +8,7 @@ import org.hibernate.validator.constraints.br.CPF;
 
 @Getter
 @Setter
-public class ClienteRequest {
+public class CriarClienteRequest {
     @NotBlank
     private String nome;
 

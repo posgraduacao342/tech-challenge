@@ -1,7 +1,7 @@
 package api.techchallenge.adapters.inbound.controller;
 
 import api.techchallenge.adapters.inbound.mapper.ClienteRequestParaClienteMapper;
-import api.techchallenge.adapters.inbound.request.ClienteRequest;
+import api.techchallenge.adapters.inbound.request.CriarClienteRequest;
 import api.techchallenge.application.core.domain.Cliente;
 import api.techchallenge.application.ports.in.SalvarClienteServicePort;
 import jakarta.validation.Valid;
@@ -21,7 +21,7 @@ public class ClienteController {
     private final ClienteRequestParaClienteMapper clienteRequestParaClienteMapper;
 
     @PostMapping
-    public Cliente salvarCliente(@RequestBody @Valid  ClienteRequest clienteRequest){
+    public Cliente salvarCliente(@RequestBody @Valid CriarClienteRequest clienteRequest){
         var cliente = clienteRequestParaClienteMapper.mapper(clienteRequest);
         return salvarClienteServicePort.salvarCliente(cliente);
     }
