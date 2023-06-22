@@ -13,8 +13,7 @@ public class DeletarClienteAdapter implements DeletarClientePort {
     private final ClienteRepository clienteRepository;
 
     @Override
-    public Void deletar(UUID id) {
+    public void deletar(UUID id) {
         this.clienteRepository.deleteById(id);
-        return null;
     }
 }

@@ -1,5 +1,7 @@
 package api.techchallenge.config;
 
+import api.techchallenge.adapters.BuscarClientesAdapter;
+import api.techchallenge.adapters.DeletarClienteAdapter;
 import api.techchallenge.adapters.SalvarClienteAdapter;
 import api.techchallenge.application.core.service.BuscarClientesService;
 import api.techchallenge.application.core.service.DeletarClienteService;
@@ -17,12 +19,12 @@ public class Cliente {
     }
 
     @Bean
-    public BuscarClientesService buscarClientesService(BuscarClientesPort buscarClientesPort){
-        return new BuscarClientesService(buscarClientesPort);
+    public BuscarClientesService buscarClientesService(BuscarClientesAdapter buscarClientesAdapter){
+        return new BuscarClientesService(buscarClientesAdapter);
     }
 
     @Bean
-    public DeletarClienteService deletarClienteService(DeletarClientePort deletarClientePort){
-        return new DeletarClienteService(deletarClientePort);
+    public DeletarClienteService deletarClienteService(DeletarClienteAdapter deletarClienteAdapter){
+        return new DeletarClienteService(deletarClienteAdapter);
     }
 }
