@@ -15,6 +15,6 @@ public class BuscarClientesService implements BuscarClientesServicePort {
 
     @Override
     public List<Cliente> buscarClientes() {
-        return this.buscarClientesPort.findAll();
+        return this.buscarClientesPort.buscarClientes();
     }
 }

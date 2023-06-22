@@ -19,7 +19,7 @@ public class BuscarClientesAdapter implements BuscarClientesPort {
     private final ClienteEntityParaClienteMapper clienteEntityParaClienteMapper;
 
     @Override
-    public List<Cliente> findAll() {
+    public List<Cliente> buscarClientes() {
         var clientesEntity = this.clienteRepository.findAll();
         List<Cliente> clientes = new ArrayList<Cliente>();
 
