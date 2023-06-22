@@ -4,12 +4,15 @@ import api.techchallenge.adapters.inbound.mapper.ClienteRequestParaClienteMapper
 import api.techchallenge.adapters.inbound.request.CriarClienteRequest;
 import api.techchallenge.application.core.domain.Cliente;
 import java.util.List;
+import java.util.UUID;
 
 import api.techchallenge.application.core.service.BuscarClientesService;
+import api.techchallenge.application.core.service.DeletarClienteService;
 import api.techchallenge.application.ports.in.SalvarClienteServicePort;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
 
 @RestController
 @RequestMapping("/clientes")
@@ -19,6 +22,8 @@ public class ClienteController {
     private final SalvarClienteServicePort salvarClienteServicePort;
 
     private final BuscarClientesService buscarClientesService;
+
+    private final DeletarClienteService deletarClienteService;
 
     private final ClienteRequestParaClienteMapper clienteRequestParaClienteMapper;
 
@@ -31,5 +36,10 @@ public class ClienteController {
     @GetMapping
     public List<Cliente> buscarClientes(){
         return buscarClientesService.buscarClientes();
+    }
+
+    @DeleteMapping(value = "/{clienteId}")
+    public void deletar(@PathVariable(value = "clienteId") String clienteId) {
+        deletarClienteService.deletarCliente(UUID.fromString(clienteId));
     }
 }
