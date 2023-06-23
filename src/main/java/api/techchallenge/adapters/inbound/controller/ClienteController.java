@@ -8,10 +8,7 @@ import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.util.List;
 import java.util.UUID;
 
-import api.techchallenge.application.core.service.BuscarClientePorIdService;
-import api.techchallenge.application.core.service.BuscarClientesService;
-import api.techchallenge.application.core.service.DeletarClienteService;
-import api.techchallenge.application.ports.in.SalvarClienteServicePort;
+import api.techchallenge.application.ports.in.ClienteServicePort;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -22,13 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class ClienteController {
 
-    private final SalvarClienteServicePort salvarClienteServicePort;
-
-    private final BuscarClientesService buscarClientesService;
-
-    private final DeletarClienteService deletarClienteService;
-
-    private final BuscarClientePorIdService buscarClientePorIdService;
+    private final ClienteServicePort clienteServicePort;
 
     private final ClienteRequestParaClienteMapper clienteRequestParaClienteMapper;
 
@@ -36,21 +27,21 @@ public class ClienteController {
     @PostMapping
     public Cliente salvarCliente(@RequestBody @Valid CriarClienteRequest clienteRequest){
         var cliente = clienteRequestParaClienteMapper.mapper(clienteRequest);
-        return salvarClienteServicePort.salvarCliente(cliente);
+        return this.clienteServicePort.salvarCliente(cliente);
     }
 
     @GetMapping
     public List<Cliente> buscarClientes(){
-        return buscarClientesService.buscarClientes();
+        return this.clienteServicePort.buscarClientes();
     }
 
     @DeleteMapping(value = "/{clienteId}")
     public void deletar(@PathVariable(value = "clienteId") String clienteId) {
-        deletarClienteService.deletarCliente(UUID.fromString(clienteId));
+        this.clienteServicePort.deletarCliente(UUID.fromString(clienteId));
     }
 
     @GetMapping(value = "/{clienteId}")
     public Cliente buscarClientePorId(@PathVariable(value = "clienteId") String clienteId) throws UserPrincipalNotFoundException {
-        return buscarClientePorIdService.buscarClientePorId(UUID.fromString(clienteId));
+        return this.clienteServicePort.buscarClientePorId(UUID.fromString(clienteId));
     }
 }
