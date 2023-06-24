@@ -1,7 +1,7 @@
 package api.techchallenge.application.controllers;
 
 import api.techchallenge.application.mappers.ClienteRequestParaClienteMapper;
-import api.techchallenge.application.requets.CriarClienteRequest;
+import api.techchallenge.application.requests.CriarClienteRequest;
 import api.techchallenge.domain.core.domain.Cliente;
 
 import java.nio.file.attribute.UserPrincipalNotFoundException;

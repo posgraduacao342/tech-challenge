@@ -20,7 +20,7 @@ public class BaseEntity implements Serializable {
 
     @CreatedDate
     @Column(nullable = false)
-    private LocalDateTime dataCricao;
+    private LocalDateTime dataCriacao;
 
     @LastModifiedDate
     @Column(nullable = false)

@@ -5,7 +5,7 @@ CREATE TABLE clientes (
 	nome varchar(255) NOT NULL,
 	email varchar(255) NOT NULL,
 	cpf varchar(255) NOT NULL,
-	data_cricao timestamptz NOT NULL DEFAULT now(),
+	data_criacao timestamptz NOT NULL DEFAULT now(),
     data_atualizacao timestamptz NOT NULL DEFAULT now(),
     data_delecao timestamptz,
 	CONSTRAINT cliente_pkey PRIMARY KEY (id)

@@ -1,4 +1,4 @@
-package api.techchallenge.application.requets;
+package api.techchallenge.application.requests;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

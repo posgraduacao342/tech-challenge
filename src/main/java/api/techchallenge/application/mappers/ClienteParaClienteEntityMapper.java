@@ -13,7 +13,7 @@ public class ClienteParaClienteEntityMapper {
     public ClienteEntity mapper(Cliente cliente){
         var clienteEntity = new ClienteEntity();
         BeanUtils.copyProperties(cliente, clienteEntity);
-        clienteEntity.setDataCricao(LocalDateTime.now(ZoneId.of("UTC")));
+        clienteEntity.setDataCriacao(LocalDateTime.now(ZoneId.of("UTC")));
         clienteEntity.setDataAtualizacao(LocalDateTime.now(ZoneId.of("UTC")));
         return clienteEntity;
     }

@@ -3,18 +3,18 @@ package api.techchallenge.domain.core.domain;
 import java.time.LocalDateTime;
 
 public class BaseEntity {
-    private LocalDateTime dataCricao;
+    private LocalDateTime dataCriacao;
 
     private LocalDateTime dataDelecao;
 
     private LocalDateTime dataAtualizacao;
 
-    public LocalDateTime getDataCricao() {
-        return dataCricao;
+    public LocalDateTime getDataCriacao() {
+        return dataCriacao;
     }
 
-    public void setDataCricao(LocalDateTime dataCricao) {
-        this.dataCricao = dataCricao;
+    public void setDataCriacao(LocalDateTime dataCriacao) {
+        this.dataCriacao = dataCriacao;
     }
 
     public LocalDateTime getDataDelecao() {

@@ -1,6 +1,6 @@
 package api.techchallenge.application.mappers;
 
-import api.techchallenge.application.requets.CriarClienteRequest;
+import api.techchallenge.application.requests.CriarClienteRequest;
 import api.techchallenge.domain.core.domain.Cliente;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
