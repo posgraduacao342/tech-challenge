@@ -4,6 +4,7 @@ import api.techchallenge.domain.core.domain.Cliente;
 import api.techchallenge.domain.core.exception.RecursoNaoEncontratoException;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface ClienteServicePort {
@@ -14,4 +15,6 @@ public interface ClienteServicePort {
     void deletarCliente(UUID id);
 
     Cliente salvarCliente(Cliente cliente);
+
+    Cliente atualizarCliente(Optional<Cliente> clienteOpcional, UUID id) throws RecursoNaoEncontratoException;
 }

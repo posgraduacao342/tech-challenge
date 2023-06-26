@@ -1,16 +1,19 @@
 package api.techchallenge.application.controllers;
 
 import api.techchallenge.application.mappers.ClienteRequestParaClienteMapper;
+import api.techchallenge.application.requests.cliente.AtualizarClienteRequest;
 import api.techchallenge.application.requests.cliente.CriarClienteRequest;
 import api.techchallenge.domain.core.domain.Cliente;
 
 import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import api.techchallenge.domain.ports.in.ClienteServicePort;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -42,6 +45,16 @@ public class ClienteController {
     @DeleteMapping(value = "/{clienteId}")
     public void deletar(@PathVariable(value = "clienteId") String clienteId) {
         this.clienteServicePort.deletarCliente(UUID.fromString(clienteId));
+    }
+
+    @PatchMapping(value = "/{clienteId}")
+    public Cliente atualizarCliente(
+            @PathVariable(value = "clienteId") String clienteId,
+            @RequestBody @Valid AtualizarClienteRequest atualizarClienteRequest
+    ) throws UserPrincipalNotFoundException {
+        var cliente = new Cliente();
+        BeanUtils.copyProperties(atualizarClienteRequest, cliente);
+        return this.clienteServicePort.atualizarCliente(Optional.of(cliente), UUID.fromString(clienteId));
     }
 
 }

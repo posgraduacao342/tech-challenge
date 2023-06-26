@@ -4,9 +4,10 @@ import api.techchallenge.domain.core.domain.Cliente;
 import api.techchallenge.domain.core.exception.RecursoNaoEncontratoException;
 import api.techchallenge.domain.ports.in.ClienteServicePort;
 import api.techchallenge.domain.ports.out.ClienteAdapterPort;
+import org.springframework.beans.BeanUtils;
 
-import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static java.text.MessageFormat.format;
@@ -36,6 +37,22 @@ public class ClienteService implements ClienteServicePort {
 
     @Override
     public Cliente salvarCliente(Cliente cliente) {
+        return this.clienteAdapterPort.salvarCliente(cliente);
+    }
+
+    @Override
+    public Cliente atualizarCliente(Optional<Cliente> clienteOpcional, UUID id) {
+        var cliente = this.buscarClientePorId(id);
+
+        if(clienteOpcional.get().getNome() != null) {
+            cliente.setNome(clienteOpcional.get().getNome());
+        }
+        if(clienteOpcional.get().getCpf() != null) {
+            cliente.setCpf(clienteOpcional.get().getCpf());
+        }
+        if(clienteOpcional.get().getEmail() != null) {
+            cliente.setEmail(clienteOpcional.get().getEmail());
+        }
         return this.clienteAdapterPort.salvarCliente(cliente);
     }
 }
