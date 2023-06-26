@@ -7,8 +7,8 @@ CREATE TABLE produtos (
                           imagem varchar(255) NOT NULL,
                           descricao varchar(500) NOT NULL DEFAULT now(),
                           categoria varchar(50) NOT NULL DEFAULT now(),
-                          data_criacao timestamptz,
+                          data_criacao timestamptz NOT NULL DEFAULT now(),
                           data_delecao timestamptz,
-                          data_atualizacao timestamptz,
+                          data_atualizacao timestamptz NOT NULL DEFAULT now(),
                           CONSTRAINT produtos_pkey PRIMARY KEY (id)
 );

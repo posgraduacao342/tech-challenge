@@ -1,12 +1,13 @@
 package api.techchallenge.domain.core.domain;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 public class BaseEntity {
+    private UUID id;
     private LocalDateTime dataCriacao;
 
     private LocalDateTime dataDelecao;
-
     private LocalDateTime dataAtualizacao;
 
     public LocalDateTime getDataCriacao() {
@@ -32,6 +33,5 @@ public class BaseEntity {
     public void setDataAtualizacao(LocalDateTime dataAtualizacao) {
         this.dataAtualizacao = dataAtualizacao;
     }
-
 
 }
