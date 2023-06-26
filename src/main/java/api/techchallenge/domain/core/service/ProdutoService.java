@@ -42,5 +42,5 @@ public class ProdutoService implements ProdutoServicePort {
     @Override
     public Produto salvarProduto(Produto produto){
         return this.produtoAdapterPort.salvarProduto(produto);
-    };
+    }
 }
