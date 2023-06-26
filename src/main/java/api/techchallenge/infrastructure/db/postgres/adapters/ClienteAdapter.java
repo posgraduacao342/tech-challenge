@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.Optional;
+
 import static java.text.MessageFormat.format;
 
 @Component
@@ -33,7 +34,7 @@ public class ClienteAdapter implements ClienteAdapterPort {
         var clientesEntity = this.clienteRepository.findAll();
         List<Cliente> clientes = new ArrayList<Cliente>();
 
-        for (ClienteEntity clienteEntity: clientesEntity) {
+        for (ClienteEntity clienteEntity : clientesEntity) {
             clientes.add(this.clienteEntityParaClienteMapper.mapper(clienteEntity));
         }
         return clientes;

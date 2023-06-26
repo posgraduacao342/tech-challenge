@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ClienteEntityParaClienteMapper {
-    public Cliente mapper(ClienteEntity clienteEntity){
+    public Cliente mapper(ClienteEntity clienteEntity) {
         var cliente = new Cliente();
         BeanUtils.copyProperties(clienteEntity, cliente);
         return cliente;

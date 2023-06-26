@@ -1,7 +1,7 @@
 package api.techchallenge.application.controllers;
 
 import api.techchallenge.application.mappers.ClienteRequestParaClienteMapper;
-import api.techchallenge.application.requests.CriarClienteRequest;
+import api.techchallenge.application.requests.cliente.CriarClienteRequest;
 import api.techchallenge.domain.core.domain.Cliente;
 
 import java.nio.file.attribute.UserPrincipalNotFoundException;
@@ -23,16 +23,20 @@ public class ClienteController {
 
     private final ClienteRequestParaClienteMapper clienteRequestParaClienteMapper;
 
-
-    @PostMapping
-    public Cliente salvarCliente(@RequestBody @Valid CriarClienteRequest clienteRequest){
-        var cliente = clienteRequestParaClienteMapper.mapper(clienteRequest);
-        return this.clienteServicePort.salvarCliente(cliente);
+    @GetMapping
+    public List<Cliente> buscarClientes() {
+        return this.clienteServicePort.buscarClientes();
     }
 
-    @GetMapping
-    public List<Cliente> buscarClientes(){
-        return this.clienteServicePort.buscarClientes();
+    @GetMapping(value = "/{clienteId}")
+    public Cliente buscarClientePorId(@PathVariable(value = "clienteId") String clienteId) throws UserPrincipalNotFoundException {
+        return this.clienteServicePort.buscarClientePorId(UUID.fromString(clienteId));
+    }
+
+    @PostMapping
+    public Cliente salvarCliente(@RequestBody @Valid CriarClienteRequest clienteRequest) {
+        var cliente = clienteRequestParaClienteMapper.mapper(clienteRequest);
+        return this.clienteServicePort.salvarCliente(cliente);
     }
 
     @DeleteMapping(value = "/{clienteId}")
@@ -40,8 +44,4 @@ public class ClienteController {
         this.clienteServicePort.deletarCliente(UUID.fromString(clienteId));
     }
 
-    @GetMapping(value = "/{clienteId}")
-    public Cliente buscarClientePorId(@PathVariable(value = "clienteId") String clienteId) throws UserPrincipalNotFoundException {
-        return this.clienteServicePort.buscarClientePorId(UUID.fromString(clienteId));
-    }
 }
