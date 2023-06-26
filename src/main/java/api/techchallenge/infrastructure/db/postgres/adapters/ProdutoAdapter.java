@@ -1,9 +1,11 @@
 package api.techchallenge.infrastructure.db.postgres.adapters;
 
 
+import api.techchallenge.application.mappers.produto.ProdutoEntityListParaProdutoListMapper;
 import api.techchallenge.application.mappers.produto.ProdutoEntityParaProdutoMapper;
 import api.techchallenge.application.mappers.produto.ProdutoParaProdutoEntityMapper;
 import api.techchallenge.domain.core.domain.Produto;
+import api.techchallenge.domain.core.enums.Categoria;
 import api.techchallenge.domain.core.exception.RecursoNaoEncontratoException;
 import api.techchallenge.domain.ports.out.ProdutoAdapterPort;
 import api.techchallenge.infrastructure.db.postgres.entity.ProdutoEntity;
@@ -25,28 +27,36 @@ public class ProdutoAdapter implements ProdutoAdapterPort {
     private final ProdutoRepository produtoRepository;
 
     private final ProdutoEntityParaProdutoMapper produtoEntityParaProdutoMapper;
-
     private final ProdutoParaProdutoEntityMapper produtoParaProdutoEntityMapper;
+    private final ProdutoEntityListParaProdutoListMapper produtoEntityListParaProdutoListMapper;
 
     @Transactional(readOnly = true)
     @Override
     public List<Produto> buscarProdutos() {
-        var ProdutosEntity = this.produtoRepository.findAll();
-        List<Produto> Produtos = new ArrayList<Produto>();
+        var produtosEntity = this.produtoRepository.findAll();
+        List<Produto> produtos = new ArrayList<>();
 
-        for (ProdutoEntity ProdutoEntity: ProdutosEntity) {
-            Produtos.add(this.produtoEntityParaProdutoMapper.mapper(ProdutoEntity));
+        for (ProdutoEntity ProdutoEntity: produtosEntity) {
+            produtos.add(this.produtoEntityParaProdutoMapper.convert(ProdutoEntity));
         }
-        return Produtos;
+        return produtos;
     }
 
     @Transactional(readOnly = true)
     @Override
     public Optional<Produto> buscarProdutoPorId(UUID id) throws RecursoNaoEncontratoException {
-        var ProdutoEntity = produtoRepository.findById(id)
+        var produtoEntity = produtoRepository.findById(id)
                 .orElseThrow(() -> new RecursoNaoEncontratoException(format("Registro não encontrado com código {0}", id)));
 
-        return Optional.of(this.produtoEntityParaProdutoMapper.mapper(ProdutoEntity));
+        return Optional.of(this.produtoEntityParaProdutoMapper.convert(produtoEntity));
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<Produto> buscarProdutosPorCategoria(Categoria categoria){
+        var produtoEntityList = produtoRepository.findByCategoria(categoria);
+
+        return this.produtoEntityListParaProdutoListMapper.convert(produtoEntityList);
     }
 
     @Transactional
@@ -58,7 +68,7 @@ public class ProdutoAdapter implements ProdutoAdapterPort {
     @Transactional
     @Override
     public Produto salvarProduto(Produto Produto) {
-        var ProdutoEntity = this.produtoParaProdutoEntityMapper.mapper(Produto);
-        return produtoEntityParaProdutoMapper.mapper(produtoRepository.save(ProdutoEntity));
+        var ProdutoEntity = this.produtoParaProdutoEntityMapper.convert(Produto);
+        return produtoEntityParaProdutoMapper.convert(produtoRepository.save(ProdutoEntity));
     }
 }

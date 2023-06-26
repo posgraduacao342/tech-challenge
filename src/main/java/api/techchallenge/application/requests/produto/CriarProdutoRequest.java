@@ -1,6 +1,6 @@
 package api.techchallenge.application.requests.produto;
 
-import api.techchallenge.domain.core.enums.CategoriaEnum;
+import api.techchallenge.domain.core.enums.Categoria;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
@@ -14,5 +14,5 @@ public class CriarProdutoRequest {
     public BigDecimal preco;
     public String imagem;
     public String descricao;
-    public CategoriaEnum categoria;
+    public Categoria categoria;
 }

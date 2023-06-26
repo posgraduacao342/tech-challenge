@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ProdutoEntityParaProdutoMapper {
-    public Produto mapper(ProdutoEntity produtoEntity){
+    public Produto convert(ProdutoEntity produtoEntity){
         var produto = new Produto();
         BeanUtils.copyProperties(produtoEntity, produto);
         return produto;

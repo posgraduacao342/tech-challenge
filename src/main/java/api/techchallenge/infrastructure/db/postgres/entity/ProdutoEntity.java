@@ -1,9 +1,7 @@
 package api.techchallenge.infrastructure.db.postgres.entity;
 
-import api.techchallenge.domain.core.enums.CategoriaEnum;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import api.techchallenge.domain.core.enums.Categoria;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -18,5 +16,6 @@ public class ProdutoEntity extends BaseEntity{
     public BigDecimal preco;
     public String imagem;
     public String descricao;
-    public CategoriaEnum categoria;
+    @Enumerated(EnumType.STRING)
+    public Categoria categoria;
 }

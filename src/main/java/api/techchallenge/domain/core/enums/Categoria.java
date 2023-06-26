@@ -1,5 +1,5 @@
 package api.techchallenge.domain.core.enums;
 
-public enum CategoriaEnum {
+public enum Categoria {
     LANCHE, ACOMPANHAMENTO, BEBIDA, SOBREMESA
 }

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ProdutoRequestParaProdutoMapper {
-    public Produto mapper(CriarProdutoRequest request){
+    public Produto convert(CriarProdutoRequest request){
         var produto = new Produto();
         BeanUtils.copyProperties(request, produto);
         return produto;

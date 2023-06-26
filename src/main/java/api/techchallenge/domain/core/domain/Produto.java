@@ -1,6 +1,6 @@
 package api.techchallenge.domain.core.domain;
 
-import api.techchallenge.domain.core.enums.CategoriaEnum;
+import api.techchallenge.domain.core.enums.Categoria;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -13,5 +13,5 @@ public class Produto extends BaseEntity {
     public BigDecimal preco;
     public String imagem;
     public String descricao;
-    public CategoriaEnum categoria;
+    public Categoria categoria;
 }

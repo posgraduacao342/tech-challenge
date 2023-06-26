@@ -10,7 +10,7 @@ import java.time.ZoneId;
 
 @Component
 public class ProdutoParaProdutoEntityMapper {
-    public ProdutoEntity mapper(Produto produto){
+    public ProdutoEntity convert(Produto produto){
         var produtoEntity = new ProdutoEntity();
         BeanUtils.copyProperties(produto, produtoEntity);
         produtoEntity.setDataCriacao(LocalDateTime.now(ZoneId.of("UTC")));
