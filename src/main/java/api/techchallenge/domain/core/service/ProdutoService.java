@@ -1,12 +1,15 @@
 package api.techchallenge.domain.core.service;
 
 import api.techchallenge.domain.core.domain.Produto;
+import api.techchallenge.domain.core.exception.RecursoNaoEncontratoException;
 import api.techchallenge.domain.ports.in.ProdutoServicePort;
 import api.techchallenge.domain.ports.out.ProdutoAdapterPort;
 import org.apache.commons.lang3.NotImplementedException;
 
 import java.util.List;
 import java.util.UUID;
+
+import static java.text.MessageFormat.format;
 
 public class ProdutoService implements ProdutoServicePort {
     private final ProdutoAdapterPort produtoAdapterPort;
@@ -17,17 +20,18 @@ public class ProdutoService implements ProdutoServicePort {
 
     @Override
     public List<Produto> buscarProdutos(){
-        throw new NotImplementedException();
+        return this.produtoAdapterPort.buscarProdutos();
     }
     
     @Override
-    public Produto buscarProdutoPorId(UUID id) {
-        throw new NotImplementedException();
+    public Produto buscarProdutoPorId(UUID id) throws RecursoNaoEncontratoException {
+        return produtoAdapterPort.buscarProdutoPorId(id)
+                .orElseThrow(() -> new RecursoNaoEncontratoException(format("Registro não encontrado com código {0}", id)));
     }
     
     @Override
     public void deletarProduto(UUID id){
-        throw new NotImplementedException();
+        this.produtoAdapterPort.deletarProduto(id);
     }
 
     @Override

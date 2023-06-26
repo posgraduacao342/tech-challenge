@@ -6,20 +6,36 @@ import api.techchallenge.domain.core.domain.Produto;
 import api.techchallenge.domain.ports.in.ProdutoServicePort;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.nio.file.attribute.UserPrincipalNotFoundException;
+import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/produto")
 @AllArgsConstructor
 public class ProdutoController {
-    private final ProdutoServicePort ProdutoServicePort;
-    private final ProdutoRequestParaProdutoMapper ProdutoRequestParaProdutoMapper;
+    private final ProdutoServicePort produtoServicePort;
+    private final ProdutoRequestParaProdutoMapper produtoRequestParaProdutoMapper;
 
     @PostMapping
     public Produto SalvarProduto (@RequestBody @Valid CriarProdutoRequest request){
-        return this.ProdutoServicePort.salvarProduto(this.ProdutoRequestParaProdutoMapper.mapper(request));
+        return this.produtoServicePort.salvarProduto(this.produtoRequestParaProdutoMapper.mapper(request));
+    }
+
+    @GetMapping
+    public List<Produto> buscarProdutos(){
+        return this.produtoServicePort.buscarProdutos();
+    }
+
+    @DeleteMapping(value = "/{produtoId}")
+    public void deletarProduto(@PathVariable(value = "produtoId") String produtoId) {
+        this.produtoServicePort.deletarProduto(UUID.fromString(produtoId));
+    }
+
+    @GetMapping(value = "/{produtoId}")
+    public Produto buscarProdutoPorId(@PathVariable(value = "produtoId") String produtoId) throws UserPrincipalNotFoundException {
+        return this.produtoServicePort.buscarProdutoPorId(UUID.fromString(produtoId));
     }
 }
