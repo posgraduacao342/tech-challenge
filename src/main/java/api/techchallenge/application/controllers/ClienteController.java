@@ -1,6 +1,6 @@
 package api.techchallenge.application.controllers;
 
-import api.techchallenge.application.mappers.ClienteRequestParaClienteMapper;
+import api.techchallenge.application.mappers.cliente.ClienteRequestParaClienteMapper;
 import api.techchallenge.application.requests.cliente.AtualizarClienteRequest;
 import api.techchallenge.application.requests.cliente.CriarClienteRequest;
 import api.techchallenge.domain.core.domain.Cliente;

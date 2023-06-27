@@ -1,4 +1,4 @@
-package api.techchallenge.application.mappers;
+package api.techchallenge.application.mappers.cliente;
 
 import api.techchallenge.application.requests.cliente.CriarClienteRequest;
 import api.techchallenge.domain.core.domain.Cliente;

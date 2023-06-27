@@ -1,4 +1,4 @@
-package api.techchallenge.application.mappers;
+package api.techchallenge.application.mappers.pedido;
 
 import api.techchallenge.application.requests.pedido.CriarPedidoRequest;
 import api.techchallenge.domain.core.domain.Pedido;

@@ -1,4 +1,4 @@
-package api.techchallenge.application.mappers;
+package api.techchallenge.application.mappers.cliente;
 
 import api.techchallenge.infrastructure.db.postgres.entity.ClienteEntity;
 import api.techchallenge.domain.core.domain.Cliente;

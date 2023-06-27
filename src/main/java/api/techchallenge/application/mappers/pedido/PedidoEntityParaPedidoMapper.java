@@ -1,4 +1,4 @@
-package api.techchallenge.application.mappers;
+package api.techchallenge.application.mappers.pedido;
 
 import api.techchallenge.domain.core.domain.Pedido;
 import api.techchallenge.infrastructure.db.postgres.entity.PedidoEntity;

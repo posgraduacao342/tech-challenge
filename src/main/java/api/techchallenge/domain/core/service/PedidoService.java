@@ -5,7 +5,10 @@ import api.techchallenge.domain.core.exception.RecursoNaoEncontratoException;
 import api.techchallenge.domain.ports.in.PedidoServicePort;
 import api.techchallenge.domain.ports.out.PedidoAdapterPort;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static java.text.MessageFormat.format;
@@ -31,6 +34,26 @@ public class PedidoService implements PedidoServicePort {
 
     @Override
     public Pedido salvarPedido(Pedido pedido) {
+        pedido.setDataCriacao(LocalDateTime.now(ZoneId.of("UTC")));
+        pedido.setDataAtualizacao(LocalDateTime.now(ZoneId.of("UTC")));
+        return this.pedidoAdapterPort.salvarPedido(pedido);
+    }
+
+    @Override
+    public Pedido atualizarPedido(Optional<Pedido> pedidoOptional, UUID id) {
+        var pedido = this.buscarPedidoPorId(id);
+
+        if (pedidoOptional.get().getStatusPedido() != null) {
+            pedido.setStatusPedido(pedidoOptional.get().getStatusPedido());
+        }
+        if (pedidoOptional.get().getPreco() != null) {
+            pedido.setPreco(pedidoOptional.get().getPreco());
+        }
+        if (pedidoOptional.get().getStatusPagamento() != null) {
+            pedido.setStatusPagamento(pedidoOptional.get().getStatusPagamento());
+        }
+        pedido.setDataAtualizacao(LocalDateTime.now(ZoneId.of("UTC")));
+
         return this.pedidoAdapterPort.salvarPedido(pedido);
     }
 

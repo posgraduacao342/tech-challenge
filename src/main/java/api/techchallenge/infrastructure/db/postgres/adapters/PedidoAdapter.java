@@ -1,7 +1,7 @@
 package api.techchallenge.infrastructure.db.postgres.adapters;
 
-import api.techchallenge.application.mappers.PedidoEntityParaPedidoMapper;
-import api.techchallenge.application.mappers.PedidoParaPedidoEntityMapper;
+import api.techchallenge.application.mappers.pedido.PedidoEntityParaPedidoMapper;
+import api.techchallenge.application.mappers.pedido.PedidoParaPedidoEntityMapper;
 import api.techchallenge.domain.core.domain.Pedido;
 import api.techchallenge.domain.core.exception.RecursoNaoEncontratoException;
 import api.techchallenge.domain.ports.out.PedidoAdapterPort;
