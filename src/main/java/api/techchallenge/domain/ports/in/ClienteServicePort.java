@@ -14,7 +14,7 @@ public interface ClienteServicePort {
 
     void deletarCliente(UUID id);
 
-    Cliente salvarCliente(Cliente cliente);
+    Cliente criarNovoCliente(Cliente cliente);
 
     Cliente atualizarCliente(Optional<Cliente> clienteOpcional, UUID id) throws RecursoNaoEncontratoException;
 }
