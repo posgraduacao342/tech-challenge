@@ -39,7 +39,7 @@ public class ClienteController {
     @PostMapping
     public Cliente salvarCliente(@RequestBody @Valid CriarClienteRequest clienteRequest) {
         var cliente = clienteRequestParaClienteMapper.mapper(clienteRequest);
-        return this.clienteServicePort.salvarCliente(cliente);
+        return this.clienteServicePort.criarNovoCliente(cliente);
     }
 
     @DeleteMapping(value = "/{clienteId}")

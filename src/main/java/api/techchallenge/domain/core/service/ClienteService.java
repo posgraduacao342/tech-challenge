@@ -4,8 +4,10 @@ import api.techchallenge.domain.core.domain.Cliente;
 import api.techchallenge.domain.core.exception.RecursoNaoEncontratoException;
 import api.techchallenge.domain.ports.in.ClienteServicePort;
 import api.techchallenge.domain.ports.out.ClienteAdapterPort;
-import org.springframework.beans.BeanUtils;
 
+
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -36,7 +38,10 @@ public class ClienteService implements ClienteServicePort {
     }
 
     @Override
-    public Cliente salvarCliente(Cliente cliente) {
+    public Cliente criarNovoCliente(Cliente cliente) {
+        cliente.setDataCriacao(LocalDateTime.now(ZoneId.of("UTC")));
+        cliente.setDataAtualizacao(LocalDateTime.now(ZoneId.of("UTC")));
+
         return this.clienteAdapterPort.salvarCliente(cliente);
     }
 
@@ -53,6 +58,9 @@ public class ClienteService implements ClienteServicePort {
         if(clienteOpcional.get().getEmail() != null) {
             cliente.setEmail(clienteOpcional.get().getEmail());
         }
+
+        cliente.setDataAtualizacao(LocalDateTime.now(ZoneId.of("UTC")));
+
         return this.clienteAdapterPort.salvarCliente(cliente);
     }
 }
