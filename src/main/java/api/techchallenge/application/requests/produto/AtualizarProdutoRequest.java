@@ -1,7 +1,6 @@
 package api.techchallenge.application.requests.produto;
 
 import api.techchallenge.domain.core.enums.Categoria;
-import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import org.springframework.lang.Nullable;
 
