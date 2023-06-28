@@ -1,6 +1,7 @@
 package api.techchallenge.application.controllers;
 
 import api.techchallenge.application.mappers.produto.ProdutoRequestParaProdutoMapper;
+import api.techchallenge.application.requests.produto.AtualizarProdutoRequest;
 import api.techchallenge.application.requests.produto.CriarProdutoRequest;
 import api.techchallenge.domain.core.domain.Produto;
 import api.techchallenge.domain.core.enums.Categoria;
@@ -21,13 +22,18 @@ public class ProdutoController {
     private final ProdutoRequestParaProdutoMapper produtoRequestParaProdutoMapper;
 
     @PostMapping
-    public Produto SalvarProduto (@RequestBody @Valid CriarProdutoRequest request){
-        return this.produtoServicePort.salvarProduto(this.produtoRequestParaProdutoMapper.convert(request));
+    public Produto salvarProduto (@RequestBody @Valid CriarProdutoRequest request){
+        return this.produtoServicePort.criarNovoProduto(this.produtoRequestParaProdutoMapper.convert(request));
     }
 
     @GetMapping
     public List<Produto> buscarProdutos(){
         return this.produtoServicePort.buscarProdutos();
+    }
+
+    @PatchMapping(value = "/{produtoId}")
+    public Produto atualizarProduto(@PathVariable UUID produtoId, @RequestBody AtualizarProdutoRequest request){
+        return this.produtoServicePort.atualizarProduto(produtoId, request);
     }
 
     @DeleteMapping(value = "/{produtoId}")

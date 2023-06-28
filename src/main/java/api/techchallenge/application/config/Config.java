@@ -1,5 +1,6 @@
 package api.techchallenge.application.config;
 
+import api.techchallenge.application.mappers.produto.ProdutoRequestParaProdutoMapper;
 import api.techchallenge.domain.core.service.PedidoService;
 import api.techchallenge.domain.core.service.ProdutoService;
 import api.techchallenge.infrastructure.db.postgres.adapters.ClienteAdapter;
@@ -18,8 +19,8 @@ public class Config {
     }
 
     @Bean
-    public ProdutoService produtoService(ProdutoAdapter produtoAdapter) {
-        return new ProdutoService(produtoAdapter);
+    public ProdutoService produtoService(ProdutoAdapter produtoAdapter, ProdutoRequestParaProdutoMapper produtoRequestParaProdutoMapper) {
+        return new ProdutoService(produtoAdapter, produtoRequestParaProdutoMapper);
     }
 
     @Bean

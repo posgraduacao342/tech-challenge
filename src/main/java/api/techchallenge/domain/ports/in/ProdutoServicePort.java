@@ -1,5 +1,6 @@
 package api.techchallenge.domain.ports.in;
 
+import api.techchallenge.application.requests.produto.AtualizarProdutoRequest;
 import api.techchallenge.domain.core.domain.Produto;
 import api.techchallenge.domain.core.enums.Categoria;
 import api.techchallenge.domain.core.exception.RecursoNaoEncontratoException;
@@ -15,7 +16,9 @@ public interface ProdutoServicePort {
 
     List<Produto> buscarProdutosPorCategoria(Categoria categoria);
 
+    Produto atualizarProduto(UUID id, AtualizarProdutoRequest produto);
+
     void deletarProduto(UUID id);
 
-    Produto salvarProduto(Produto Produto);
+    Produto criarNovoProduto(Produto Produto);
 }

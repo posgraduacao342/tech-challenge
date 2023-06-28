@@ -69,6 +69,7 @@ public class ProdutoAdapter implements ProdutoAdapterPort {
     @Override
     public Produto salvarProduto(Produto Produto) {
         var ProdutoEntity = this.produtoParaProdutoEntityMapper.convert(Produto);
-        return produtoEntityParaProdutoMapper.convert(produtoRepository.save(ProdutoEntity));
+
+        return produtoEntityParaProdutoMapper.convertWithId(produtoRepository.save(ProdutoEntity));
     }
 }

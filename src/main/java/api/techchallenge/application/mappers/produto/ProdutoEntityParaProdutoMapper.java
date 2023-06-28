@@ -13,4 +13,11 @@ public class ProdutoEntityParaProdutoMapper {
         BeanUtils.copyProperties(produtoEntity, produto);
         return produto;
     }
+
+    public Produto convertWithId(ProdutoEntity produtoEntity){
+        var produto = new Produto();
+        BeanUtils.copyProperties(produtoEntity, produto);
+        produto.setId(produtoEntity.getId());
+        return produto;
+    }
 }
