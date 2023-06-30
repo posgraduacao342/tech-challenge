@@ -9,6 +9,7 @@ import api.techchallenge.domain.ports.in.PedidoServicePort;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.nio.file.attribute.UserPrincipalNotFoundException;
@@ -25,6 +26,7 @@ public class PedidoController {
 
     private final PedidoRequestParaPedidoMapper pedidoRequestParaPedidoMapper;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public List<Pedido> buscarPedidos() {
         return this.pedidoServicePort.buscarPedidos();
