@@ -23,6 +23,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/swagger-ui/**").permitAll()
                         .requestMatchers(   HttpMethod.POST, "/clientes").permitAll()
                         .requestMatchers(   HttpMethod.PATCH, "/clientes/**").permitAll()
+                        .requestMatchers(   HttpMethod.POST, "/pagamentos").permitAll()
                         .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults())

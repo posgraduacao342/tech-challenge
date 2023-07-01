@@ -44,9 +44,10 @@ public class PedidoController {
     }
 
     @PatchMapping(value = "/{pedidoId}")
-    public Pedido atualizarPedido(@PathVariable(value = "pedidoId") String pedidoId,
-                                  @RequestBody @Valid AtualizarPedidoRequest atualizarPedidoRequest)
-            throws UserPrincipalNotFoundException {
+    public Pedido atualizarPedido(
+            @PathVariable(value = "pedidoId") String pedidoId,
+            @RequestBody @Valid AtualizarPedidoRequest atualizarPedidoRequest
+    ) throws UserPrincipalNotFoundException {
         var pedido = new Pedido();
         BeanUtils.copyProperties(atualizarPedidoRequest, pedido);
         return this.pedidoServicePort.atualizarPedido(Optional.of(pedido), UUID.fromString(pedidoId));
