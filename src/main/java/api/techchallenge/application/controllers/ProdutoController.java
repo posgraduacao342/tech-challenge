@@ -8,7 +8,6 @@ import api.techchallenge.domain.core.enums.Categoria;
 import api.techchallenge.domain.ports.in.ProdutoServicePort;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.nio.file.attribute.UserPrincipalNotFoundException;
@@ -16,7 +15,6 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@PreAuthorize("hasRole('ADMIN')")
 @RequestMapping("/produtos")
 @AllArgsConstructor
 public class ProdutoController {

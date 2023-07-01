@@ -38,5 +38,5 @@ Abra o navegador e cole a url: http://localhost:8080/swagger-ui/index.html
 
 ## Autenticação
 Ao subir a aplicação é gerado um usuário default para conseguir realizar as chamdas nas rotas autenticadas.
-email: test@test.com
-senha: senha123
+- email: test@test.com
+- senha: senha123

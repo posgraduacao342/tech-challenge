@@ -1,4 +1,4 @@
-package api.techchallenge.infrastructure.db.postgres.enums;
+package api.techchallenge.domain.core.enums;
 
 public enum Papel {
     ADMIN,

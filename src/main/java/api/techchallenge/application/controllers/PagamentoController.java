@@ -4,12 +4,10 @@ import api.techchallenge.application.mappers.cliente.ClienteRequestParaClienteMa
 import api.techchallenge.application.requests.pagamento.PagarOPedidoRequest;
 import api.techchallenge.domain.core.exception.RecursoNaoEncontratoException;
 import api.techchallenge.domain.core.service.PagamentoService;
-import api.techchallenge.domain.ports.in.PedidoServicePort;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
 import java.util.UUID;
 
 
