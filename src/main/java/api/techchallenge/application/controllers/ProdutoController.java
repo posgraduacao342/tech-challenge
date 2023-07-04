@@ -1,6 +1,6 @@
 package api.techchallenge.application.controllers;
 
-import api.techchallenge.application.mappers.produto.ProdutoRequestParaProdutoMapper;
+import api.techchallenge.application.mappers.ProdutoMapper;
 import api.techchallenge.application.requests.produto.AtualizarProdutoRequest;
 import api.techchallenge.application.requests.produto.CriarProdutoRequest;
 import api.techchallenge.domain.core.domain.Produto;
@@ -21,11 +21,11 @@ import java.util.UUID;
 @AllArgsConstructor
 public class ProdutoController {
     private final ProdutoServicePort produtoServicePort;
-    private final ProdutoRequestParaProdutoMapper produtoRequestParaProdutoMapper;
+    private final ProdutoMapper produtoMapper;
 
     @PostMapping
     public Produto salvarProduto (@RequestBody @Valid CriarProdutoRequest request){
-        return this.produtoServicePort.criarNovoProduto(this.produtoRequestParaProdutoMapper.convert(request));
+        return this.produtoServicePort.criarNovoProduto(produtoMapper.toDomain(request));
     }
 
     @GetMapping

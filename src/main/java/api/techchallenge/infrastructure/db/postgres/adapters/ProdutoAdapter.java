@@ -1,9 +1,7 @@
 package api.techchallenge.infrastructure.db.postgres.adapters;
 
 
-import api.techchallenge.application.mappers.produto.ProdutoEntityListParaProdutoListMapper;
-import api.techchallenge.application.mappers.produto.ProdutoEntityParaProdutoMapper;
-import api.techchallenge.application.mappers.produto.ProdutoParaProdutoEntityMapper;
+import api.techchallenge.application.mappers.ProdutoMapper;
 import api.techchallenge.domain.core.domain.Produto;
 import api.techchallenge.domain.core.enums.Categoria;
 import api.techchallenge.domain.core.exception.RecursoNaoEncontratoException;
@@ -25,20 +23,18 @@ import static java.text.MessageFormat.format;
 @AllArgsConstructor
 public class ProdutoAdapter implements ProdutoAdapterPort {
     private final ProdutoRepository produtoRepository;
-
-    private final ProdutoEntityParaProdutoMapper produtoEntityParaProdutoMapper;
-    private final ProdutoParaProdutoEntityMapper produtoParaProdutoEntityMapper;
-    private final ProdutoEntityListParaProdutoListMapper produtoEntityListParaProdutoListMapper;
+    private final ProdutoMapper produtoMapper;
 
     @Transactional(readOnly = true)
     @Override
     public List<Produto> buscarProdutos() {
-        var produtosEntity = this.produtoRepository.findAll();
+        var produtosEntity = produtoRepository.findAll();
         List<Produto> produtos = new ArrayList<>();
 
-        for (ProdutoEntity ProdutoEntity: produtosEntity) {
-            produtos.add(this.produtoEntityParaProdutoMapper.convert(ProdutoEntity));
+        for (ProdutoEntity produtoEntity: produtosEntity) {
+            produtos.add(produtoMapper.toDomain(produtoEntity));
         }
+
         return produtos;
     }
 
@@ -48,7 +44,7 @@ public class ProdutoAdapter implements ProdutoAdapterPort {
         var produtoEntity = produtoRepository.findById(id)
                 .orElseThrow(() -> new RecursoNaoEncontratoException(format("Registro não encontrado com código {0}", id)));
 
-        return Optional.of(this.produtoEntityParaProdutoMapper.convert(produtoEntity));
+        return Optional.of(produtoMapper.toDomain(produtoEntity));
     }
 
     @Transactional(readOnly = true)
@@ -56,7 +52,7 @@ public class ProdutoAdapter implements ProdutoAdapterPort {
     public List<Produto> buscarProdutosPorCategoria(Categoria categoria){
         var produtoEntityList = produtoRepository.findByCategoria(categoria);
 
-        return this.produtoEntityListParaProdutoListMapper.convert(produtoEntityList);
+        return produtoMapper.toDomainList(produtoEntityList);
     }
 
     @Transactional
@@ -68,8 +64,8 @@ public class ProdutoAdapter implements ProdutoAdapterPort {
     @Transactional
     @Override
     public Produto salvarProduto(Produto Produto) {
-        var ProdutoEntity = this.produtoParaProdutoEntityMapper.convert(Produto);
+        var ProdutoEntity = produtoMapper.toEntity(Produto);
 
-        return produtoEntityParaProdutoMapper.convertWithId(produtoRepository.save(ProdutoEntity));
+        return produtoMapper.toDomain(produtoRepository.save(ProdutoEntity));
     }
 }

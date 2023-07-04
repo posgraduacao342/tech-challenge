@@ -8,13 +8,13 @@ import lombok.EqualsAndHashCode;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
 @Table(name = "pedidos")
 public class PedidoEntity extends BaseEntity {
-
     @Column()
     @Enumerated(EnumType.STRING)
     private StatusPedido statusPedido;
@@ -22,6 +22,9 @@ public class PedidoEntity extends BaseEntity {
     @Column()
     @Enumerated(EnumType.STRING)
     private StatusPagamento statusPagamento;
+
+    @OneToMany(mappedBy = "pedido")
+    private Set<ItemEntity> itens;
 
     @Column(nullable = false)
     private BigDecimal preco;

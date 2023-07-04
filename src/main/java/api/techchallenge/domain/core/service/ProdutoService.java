@@ -1,29 +1,25 @@
 package api.techchallenge.domain.core.service;
 
-import api.techchallenge.application.mappers.produto.ProdutoRequestParaProdutoMapper;
+import api.techchallenge.application.mappers.ProdutoMapper;
 import api.techchallenge.application.requests.produto.AtualizarProdutoRequest;
 import api.techchallenge.domain.core.domain.Produto;
 import api.techchallenge.domain.core.enums.Categoria;
 import api.techchallenge.domain.core.exception.RecursoNaoEncontratoException;
 import api.techchallenge.domain.ports.in.ProdutoServicePort;
 import api.techchallenge.domain.ports.out.ProdutoAdapterPort;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
 import static java.text.MessageFormat.format;
 
+@Service
+@AllArgsConstructor
 public class ProdutoService implements ProdutoServicePort {
     private final ProdutoAdapterPort produtoAdapterPort;
-
-    @Autowired
-    private final ProdutoRequestParaProdutoMapper produtoRequestParaProdutoMapper;
-
-    public ProdutoService(ProdutoAdapterPort produtoAdapterPort, ProdutoRequestParaProdutoMapper produtoRequestParaProdutoMapper) {
-        this.produtoAdapterPort = produtoAdapterPort;
-        this.produtoRequestParaProdutoMapper = produtoRequestParaProdutoMapper;
-    }
+    private final ProdutoMapper produtoMapper;
 
     @Override
     public List<Produto> buscarProdutos(){
@@ -45,7 +41,7 @@ public class ProdutoService implements ProdutoServicePort {
     public Produto atualizarProduto(UUID id, AtualizarProdutoRequest request){
         var produto = this.buscarProdutoPorId(id);
 
-        produtoRequestParaProdutoMapper.convert(request, produto);
+        produtoMapper.toDomain(request, produto);
 
         return this.produtoAdapterPort.salvarProduto(produto);
     }
