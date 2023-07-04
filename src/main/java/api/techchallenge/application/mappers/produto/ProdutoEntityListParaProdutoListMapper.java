@@ -2,7 +2,7 @@ package api.techchallenge.application.mappers.produto;
 
 
 import api.techchallenge.domain.core.domain.Produto;
-import api.techchallenge.infrastructure.db.postgres.entity.ProdutoEntity;
+import api.techchallenge.infrastructure.db.entity.ProdutoEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

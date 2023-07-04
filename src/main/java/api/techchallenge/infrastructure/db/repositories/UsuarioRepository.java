@@ -1,6 +1,6 @@
-package api.techchallenge.infrastructure.db.postgres.repositories;
+package api.techchallenge.infrastructure.db.repositories;
 
-import api.techchallenge.infrastructure.db.postgres.entity.UsuarioEntity;
+import api.techchallenge.infrastructure.db.entity.UsuarioEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,6 +1,6 @@
 package api.techchallenge.application.mappers.cliente;
 
-import api.techchallenge.infrastructure.db.postgres.entity.ClienteEntity;
+import api.techchallenge.infrastructure.db.entity.ClienteEntity;
 import api.techchallenge.domain.core.domain.Cliente;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;

@@ -1,4 +1,4 @@
-package api.techchallenge.infrastructure.db.postgres.entity;
+package api.techchallenge.infrastructure.db.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;

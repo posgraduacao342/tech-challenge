@@ -1,11 +1,11 @@
-package api.techchallenge.infrastructure.db.postgres.adapters;
+package api.techchallenge.application.adapters;
 
 
 import api.techchallenge.domain.core.exception.RecursoNaoEncontratoException;
-import api.techchallenge.infrastructure.db.postgres.entity.ClienteEntity;
+import api.techchallenge.infrastructure.db.entity.ClienteEntity;
 import api.techchallenge.application.mappers.cliente.ClienteEntityParaClienteMapper;
 import api.techchallenge.application.mappers.cliente.ClienteParaClienteEntityMapper;
-import api.techchallenge.infrastructure.db.postgres.repositories.ClienteRepository;
+import api.techchallenge.infrastructure.db.repositories.ClienteRepository;
 import api.techchallenge.domain.core.domain.Cliente;
 import api.techchallenge.domain.ports.out.ClienteAdapterPort;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,7 +1,7 @@
 package api.techchallenge.infrastructure.security.config;
 
-import api.techchallenge.infrastructure.db.postgres.entity.UsuarioEntity;
-import api.techchallenge.infrastructure.db.postgres.repositories.UsuarioRepository;
+import api.techchallenge.infrastructure.db.entity.UsuarioEntity;
+import api.techchallenge.infrastructure.db.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
