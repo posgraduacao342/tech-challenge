@@ -1,6 +1,8 @@
 package api.techchallenge.domain.core.service;
 
 import api.techchallenge.domain.core.domain.Pedido;
+import api.techchallenge.domain.core.enums.StatusPagamento;
+import api.techchallenge.domain.core.enums.StatusPedido;
 import api.techchallenge.domain.core.exception.RecursoNaoEncontratoException;
 import api.techchallenge.domain.ports.in.PedidoServicePort;
 import api.techchallenge.domain.ports.out.PedidoAdapterPort;
@@ -36,6 +38,8 @@ public class PedidoService implements PedidoServicePort {
     public Pedido salvarPedido(Pedido pedido) {
         pedido.setDataCriacao(LocalDateTime.now(ZoneId.of("UTC")));
         pedido.setDataAtualizacao(LocalDateTime.now(ZoneId.of("UTC")));
+        pedido.setStatusPedido(StatusPedido.NAO_RECEBIDO);
+        pedido.setStatusPagamento(StatusPagamento.AGUARDANDO_PAGAMENTO);
         return this.pedidoAdapterPort.salvarPedido(pedido);
     }
 
