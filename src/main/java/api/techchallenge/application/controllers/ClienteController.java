@@ -13,7 +13,6 @@ import java.util.UUID;
 import api.techchallenge.domain.ports.in.ClienteServicePort;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.BeanUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -55,8 +54,7 @@ public class ClienteController {
             @PathVariable(value = "clienteId") String clienteId,
             @RequestBody @Valid AtualizarClienteRequest atualizarClienteRequest
     ) throws UserPrincipalNotFoundException {
-        var cliente = new Cliente();
-        BeanUtils.copyProperties(atualizarClienteRequest, cliente);
+        var cliente = clienteMapper.toTransform(atualizarClienteRequest, Cliente.class);
         return this.clienteServicePort.atualizarCliente(Optional.of(cliente), UUID.fromString(clienteId));
     }
 
