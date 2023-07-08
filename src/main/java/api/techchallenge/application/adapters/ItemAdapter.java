@@ -1,5 +1,6 @@
 package api.techchallenge.application.adapters;
 
+import api.techchallenge.application.mappers.GenericMapper;
 import api.techchallenge.application.mappers.ItemMapper;
 import api.techchallenge.application.requests.item.AtualizarItemRequest;
 import api.techchallenge.domain.core.domain.Item;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 public class ItemAdapter implements ItemAdapterPort {
     private final ItemRepository itemRepository;
     private final ItemMapper itemMapper;
+    private final GenericMapper itemGenericMapper;
 
     @Override
     public Item salvarItem(Item item) {
@@ -63,5 +65,18 @@ public class ItemAdapter implements ItemAdapterPort {
         ItemEntity itemEntity = itemRepository.findById(itemId)
             .orElseThrow(() -> new RuntimeException("Item não encontrado"));
         return itemMapper.toDomain(itemEntity);
+    }
+
+    @Override
+    public List<Item> buscarItemPorIds(List<UUID> ids) {
+        var itemEntity = itemRepository.findByIdIn(ids);
+        return itemMapper.toDomain(itemEntity);
+    }
+
+    @Override
+    public List<Item> atualizarOuSalvarListaItem(List<Item> itens) {
+        var itensEntity = itemMapper.toEntity(itens);
+        var itensSalvos = itemRepository.saveAll(itensEntity);
+        return itemMapper.toDomain(itensSalvos);
     }
 }

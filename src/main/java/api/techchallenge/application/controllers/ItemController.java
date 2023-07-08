@@ -1,8 +1,11 @@
 package api.techchallenge.application.controllers;
 
-import api.techchallenge.application.mappers.ItemMapper;
+import api.techchallenge.application.mappers.GenericMapper;
+import api.techchallenge.application.requests.item.AtualizarObservacaoItemRequest;
+import api.techchallenge.application.responses.item.ItemResponse;
 import api.techchallenge.domain.core.domain.Item;
 import api.techchallenge.domain.ports.in.ItemServicePort;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +19,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class ItemController {
     private final ItemServicePort itemService;
+    private final GenericMapper itemGenericMapper;
 
     @GetMapping("/porPedido/{pedidoId}")
     public ResponseEntity<List<Item>> buscarItensPorPedido(@PathVariable UUID pedidoId) {
@@ -27,5 +31,11 @@ public class ItemController {
     public ResponseEntity<Item> buscarItem(@PathVariable UUID itemId) {
         Item item = itemService.buscarItem(itemId);
         return new ResponseEntity<>(item, HttpStatus.OK);
+    }
+
+    @PatchMapping(value = "/observacao")
+    public List<ItemResponse> atualizarObservacao(@RequestBody @Valid List<AtualizarObservacaoItemRequest> itemRequestPatch){
+        var itens = itemGenericMapper.toTransformList(itemRequestPatch, Item.class);
+        return itemGenericMapper.toTransformList(itemService.atualizarObservacao(itens), ItemResponse.class);
     }
 }

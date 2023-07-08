@@ -2,6 +2,7 @@ package api.techchallenge.domain.ports.in;
 
 import api.techchallenge.domain.core.domain.Pedido;
 import api.techchallenge.domain.core.enums.PedidoSortingOptions;
+import api.techchallenge.domain.core.enums.StatusPedido;
 import api.techchallenge.domain.core.exception.RecursoNaoEncontratoException;
 import org.springframework.data.domain.Sort;
 
@@ -18,7 +19,7 @@ public interface PedidoServicePort {
 
     Pedido salvarPedido(Pedido pedido);
 
-    Pedido atualizarPedido(Optional<Pedido> pedidoOptional, UUID id) throws RecursoNaoEncontratoException;
+    Pedido atualizarStatusPedido(StatusPedido statusPedido, UUID id) throws RecursoNaoEncontratoException;
 
     void deletarPedido(UUID id);
 }

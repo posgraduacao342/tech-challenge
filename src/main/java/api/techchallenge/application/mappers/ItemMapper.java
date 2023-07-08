@@ -10,35 +10,28 @@ import api.techchallenge.infrastructure.db.entity.ProdutoEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 @AllArgsConstructor
 public class ItemMapper {
     private final ProdutoMapper produtoMapper;
+    private final GenericMapper itemGenericMapper;
 
     public ItemEntity toEntity(Item item) {
-        ItemEntity itemEntity = new ItemEntity();
-
-        var pedidoEntity = new PedidoEntity();
-        pedidoEntity.setId(item.getPedido().getId());
-
-        var produtoEntity = new ProdutoEntity();
-        produtoEntity.setId(item.getProduto().getId());
-
-        itemEntity.setId(item.getId());
-        itemEntity.setPedido(pedidoEntity);
-        itemEntity.setProduto(produtoEntity);
-        itemEntity.setObservacoes(item.getObservacoes());
-        itemEntity.setQuantidade(item.getQuantidade());
+        ItemEntity itemEntity = itemGenericMapper.toTransform(item, ItemEntity.class);
+        itemEntity.setProduto(itemGenericMapper.toTransform(item.getProduto(), ProdutoEntity.class));
+        itemEntity.setPedido(itemGenericMapper.toTransform(item.getPedido(), PedidoEntity.class));
 
         return itemEntity;
     }
 
     public Item toDomain(ItemEntity itemEntity) {
-        Item item = new Item();
-        item.setId(itemEntity.getId());
-        item.setProduto(produtoMapper.toDomain(itemEntity.getProduto()));
-        item.setObservacoes(itemEntity.getObservacoes());
-        item.setQuantidade(itemEntity.getQuantidade());
+        var item = itemGenericMapper.toTransform(itemEntity, Item.class);
+        item.setProduto(itemGenericMapper.toTransform(itemEntity.getProduto(), Produto.class));
+        item.setPedido(itemGenericMapper.toTransform(itemEntity.getPedido(), Pedido.class));
+
         return item;
     }
 
@@ -56,5 +49,21 @@ public class ItemMapper {
         item.setQuantidade(request.getQuantidade());
 
         return item;
+    }
+
+    public List<Item> toDomain(List<ItemEntity> itensEntity) {
+        var itens = new ArrayList<Item>();
+        itensEntity.forEach(itemEntity -> {
+            itens.add(toDomain(itemEntity));
+        });
+        return itens;
+    }
+
+    public List<ItemEntity> toEntity(List<Item> itens) {
+        var itensEntity = new ArrayList<ItemEntity>();
+        itens.forEach(item -> {
+            itensEntity.add(toEntity(item));
+        });
+        return itensEntity;
     }
 }

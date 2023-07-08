@@ -4,12 +4,14 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 import java.util.UUID;
-@Data
-public class ItensRequest {
-    @NotBlank
-    private UUID produtoId;
 
-    private String observacoes;
+@Data
+public class AtualizarObservacaoItemRequest {
+
     @NotBlank
-    private int quantidade;
+    private UUID id;
+
+    @NotBlank
+    private String observacoes;
+
 }

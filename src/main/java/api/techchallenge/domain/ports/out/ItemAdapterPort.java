@@ -13,4 +13,6 @@ public interface ItemAdapterPort {
     List<Item> buscarItensPorPedido(UUID pedidoId);
     void deletarItensPorPedido(UUID pedidoId);
     Item buscarItem(UUID itemId);
+    List<Item> buscarItemPorIds(List<UUID> ids);
+    List<Item> atualizarOuSalvarListaItem(List<Item> itens);
 }

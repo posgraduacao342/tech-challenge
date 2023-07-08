@@ -10,4 +10,5 @@ import java.util.UUID;
 @Repository
 public interface ItemRepository extends JpaRepository<ItemEntity, UUID> {
     List<ItemEntity> findByPedidoId(UUID pedidoId);
+    List<ItemEntity> findByIdIn(List<UUID> ids);
 }

@@ -1,5 +1,6 @@
 package api.techchallenge.application.controllers;
 
+import api.techchallenge.application.mappers.GenericMapper;
 import api.techchallenge.application.mappers.PedidoMapper;
 import api.techchallenge.application.requests.pedido.AtualizarPedidoRequest;
 import api.techchallenge.application.requests.pedido.CriarPedidoRequest;
@@ -10,7 +11,6 @@ import api.techchallenge.domain.ports.in.PedidoServicePort;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +27,7 @@ public class PedidoController {
 
     private final PedidoServicePort pedidoServicePort;
     private final PedidoMapper pedidoMapper;
+    private final GenericMapper pedidoGMapper;
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
@@ -51,13 +52,11 @@ public class PedidoController {
         return pedidoMapper.toResponse(this.pedidoServicePort.salvarPedido(pedido));
     }
 
-    @PatchMapping(value = "/{pedidoId}")
-    public Pedido atualizarPedido(@PathVariable(value = "pedidoId") String pedidoId,
+    @PatchMapping(value = "/{pedidoId}/status")
+    public PedidoResponse atualizarPedido(@PathVariable(value = "pedidoId") String pedidoId,
                                   @RequestBody @Valid AtualizarPedidoRequest atualizarPedidoRequest)
             throws UserPrincipalNotFoundException {
-        var pedido = new Pedido();
-        BeanUtils.copyProperties(atualizarPedidoRequest, pedido);
-        return this.pedidoServicePort.atualizarPedido(Optional.of(pedido), UUID.fromString(pedidoId));
+        return pedidoMapper.toResponse(this.pedidoServicePort.atualizarStatusPedido(atualizarPedidoRequest.getStatusPedido(), UUID.fromString(pedidoId)));
     }
 
     @DeleteMapping(value = "/{pedidoId}")

@@ -62,32 +62,10 @@ public class PedidoService implements PedidoServicePort {
     }
 
     @Override
-    public Pedido atualizarPedido(Optional<Pedido> pedidoOptional, UUID id) {
+    public Pedido atualizarStatusPedido(StatusPedido statusPedido, UUID id) {
         var pedido = this.buscarPedidoPorId(id);
-
-        if (pedidoOptional.get().getStatusPedido() != null) {
-            pedido.setStatusPedido(pedidoOptional.get().getStatusPedido());
-        }
-        if (pedidoOptional.get().getItens() != null) {
-            pedido.setItens(pedidoOptional.get().getItens());
-        }
-        if (pedidoOptional.get().getPreco() != null) {
-            pedido.setPreco(pedidoOptional.get().getPreco());
-        }
-        if (pedidoOptional.get().getStatusPagamento() != null) {
-            pedido.setStatusPagamento(pedidoOptional.get().getStatusPagamento());
-        }
-        if (pedidoOptional.get().getDataRecebimento() != null) {
-            pedido.setDataRecebimento(pedidoOptional.get().getDataRecebimento());
-        }
-        if (pedidoOptional.get().getStatusPedido() != null) {
-            if (pedido.getStatusPedido() == StatusPedido.NAO_RECEBIDO && pedidoOptional.get().getStatusPedido() != StatusPedido.RECEBIDO) {
-                pedido.setDataRecebimento(LocalDateTime.now());
-            }
-            pedido.setStatusPedido(pedidoOptional.get().getStatusPedido());
-        }
         pedido.setDataAtualizacao(LocalDateTime.now(ZoneId.of("UTC")));
-
+        pedido.setStatusPedido(statusPedido);
         return this.pedidoAdapterPort.salvarPedido(pedido);
     }
 

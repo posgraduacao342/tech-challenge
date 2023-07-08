@@ -8,4 +8,5 @@ import java.util.UUID;
 public interface ItemServicePort {
     List<Item> buscarItensPorPedido(UUID pedidoId);
     Item buscarItem(UUID itemId);
+    List<Item> atualizarObservacao(List<Item> itens);
 }
