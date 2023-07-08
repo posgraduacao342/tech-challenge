@@ -3,6 +3,7 @@ package api.techchallenge.application.controllers;
 import api.techchallenge.application.mappers.ItemMapper;
 import api.techchallenge.domain.core.domain.Item;
 import api.techchallenge.domain.ports.in.ItemServicePort;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,13 +13,9 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/itens")
+@AllArgsConstructor
 public class ItemController {
     private final ItemServicePort itemService;
-
-    public ItemController(ItemServicePort itemService, ItemMapper itemMapper) {
-        this.itemService = itemService;
-        this.itemMapper = itemMapper;
-    }
 
     @GetMapping("/porPedido/{pedidoId}")
     public ResponseEntity<List<Item>> buscarItensPorPedido(@PathVariable UUID pedidoId) {
