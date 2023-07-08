@@ -7,7 +7,6 @@ import lombok.EqualsAndHashCode;
 
 import java.math.BigDecimal;
 import java.util.Set;
-import java.util.UUID;
 
 @EqualsAndHashCode(callSuper = true)
 @Data

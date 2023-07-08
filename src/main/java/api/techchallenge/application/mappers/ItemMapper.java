@@ -1,7 +1,6 @@
 package api.techchallenge.application.mappers;
 
 import api.techchallenge.application.mappers.pedido.PedidoEntityParaPedidoMapper;
-import api.techchallenge.application.requests.item.AtualizarItemRequest;
 import api.techchallenge.application.requests.item.CriarItemRequest;
 import api.techchallenge.domain.core.domain.Item;
 import api.techchallenge.domain.core.domain.Pedido;
@@ -11,8 +10,6 @@ import api.techchallenge.infrastructure.db.postgres.entity.PedidoEntity;
 import api.techchallenge.infrastructure.db.postgres.entity.ProdutoEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-
-import java.util.UUID;
 
 @Component
 @AllArgsConstructor

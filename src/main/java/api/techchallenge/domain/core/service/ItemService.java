@@ -1,8 +1,5 @@
 package api.techchallenge.domain.core.service;
 
-import api.techchallenge.application.mappers.ItemMapper;
-import api.techchallenge.application.requests.item.AtualizarItemRequest;
-import api.techchallenge.application.requests.item.CriarItemRequest;
 import api.techchallenge.domain.core.domain.Item;
 import api.techchallenge.domain.ports.in.ItemServicePort;
 import api.techchallenge.domain.ports.out.ItemAdapterPort;
