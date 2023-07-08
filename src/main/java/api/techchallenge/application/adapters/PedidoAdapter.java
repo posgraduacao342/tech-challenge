@@ -1,4 +1,4 @@
-package api.techchallenge.infrastructure.db.postgres.adapters;
+package api.techchallenge.application.adapters;
 
 import api.techchallenge.application.mappers.PedidoMapper;
 import api.techchallenge.domain.core.domain.Pedido;
@@ -6,8 +6,8 @@ import api.techchallenge.domain.core.enums.PedidoSortingOptions;
 import api.techchallenge.domain.core.enums.StatusPedido;
 import api.techchallenge.domain.core.exception.RecursoNaoEncontratoException;
 import api.techchallenge.domain.ports.out.PedidoAdapterPort;
-import api.techchallenge.infrastructure.db.postgres.entity.PedidoEntity;
-import api.techchallenge.infrastructure.db.postgres.repositories.PedidoRepository;
+import api.techchallenge.infrastructure.db.entity.PedidoEntity;
+import api.techchallenge.infrastructure.db.repositories.PedidoRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Sort;

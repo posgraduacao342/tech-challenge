@@ -4,9 +4,9 @@ import api.techchallenge.application.requests.item.CriarItemRequest;
 import api.techchallenge.domain.core.domain.Item;
 import api.techchallenge.domain.core.domain.Pedido;
 import api.techchallenge.domain.core.domain.Produto;
-import api.techchallenge.infrastructure.db.postgres.entity.ItemEntity;
-import api.techchallenge.infrastructure.db.postgres.entity.PedidoEntity;
-import api.techchallenge.infrastructure.db.postgres.entity.ProdutoEntity;
+import api.techchallenge.infrastructure.db.entity.ItemEntity;
+import api.techchallenge.infrastructure.db.entity.PedidoEntity;
+import api.techchallenge.infrastructure.db.entity.ProdutoEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 

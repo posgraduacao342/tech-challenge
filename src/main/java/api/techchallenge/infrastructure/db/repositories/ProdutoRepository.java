@@ -1,7 +1,7 @@
-package api.techchallenge.infrastructure.db.postgres.repositories;
+package api.techchallenge.infrastructure.db.repositories;
 
 import api.techchallenge.domain.core.enums.Categoria;
-import api.techchallenge.infrastructure.db.postgres.entity.ProdutoEntity;
+import api.techchallenge.infrastructure.db.entity.ProdutoEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

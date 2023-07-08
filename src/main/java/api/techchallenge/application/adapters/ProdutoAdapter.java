@@ -1,4 +1,4 @@
-package api.techchallenge.infrastructure.db.postgres.adapters;
+package api.techchallenge.application.adapters;
 
 
 import api.techchallenge.application.mappers.ProdutoMapper;
@@ -6,8 +6,8 @@ import api.techchallenge.domain.core.domain.Produto;
 import api.techchallenge.domain.core.enums.Categoria;
 import api.techchallenge.domain.core.exception.RecursoNaoEncontratoException;
 import api.techchallenge.domain.ports.out.ProdutoAdapterPort;
-import api.techchallenge.infrastructure.db.postgres.entity.ProdutoEntity;
-import api.techchallenge.infrastructure.db.postgres.repositories.ProdutoRepository;
+import api.techchallenge.infrastructure.db.entity.ProdutoEntity;
+import api.techchallenge.infrastructure.db.repositories.ProdutoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;

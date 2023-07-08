@@ -1,11 +1,11 @@
-package api.techchallenge.infrastructure.db.postgres.adapters;
+package api.techchallenge.application.adapters;
 
 import api.techchallenge.application.mappers.ItemMapper;
 import api.techchallenge.application.requests.item.AtualizarItemRequest;
 import api.techchallenge.domain.core.domain.Item;
 import api.techchallenge.domain.ports.out.ItemAdapterPort;
-import api.techchallenge.infrastructure.db.postgres.entity.ItemEntity;
-import api.techchallenge.infrastructure.db.postgres.repositories.ItemRepository;
+import api.techchallenge.infrastructure.db.entity.ItemEntity;
+import api.techchallenge.infrastructure.db.repositories.ItemRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import java.util.List;

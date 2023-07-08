@@ -1,9 +1,9 @@
 package api.techchallenge.application.config;
 
 import api.techchallenge.domain.core.service.PedidoService;
-import api.techchallenge.infrastructure.db.postgres.adapters.ClienteAdapter;
+import api.techchallenge.application.adapters.ClienteAdapter;
 import api.techchallenge.domain.core.service.ClienteService;
-import api.techchallenge.infrastructure.db.postgres.adapters.PedidoAdapter;
+import api.techchallenge.application.adapters.PedidoAdapter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

@@ -6,9 +6,9 @@ import api.techchallenge.application.responses.pedido.PedidoResponse;
 import api.techchallenge.domain.core.domain.Item;
 import api.techchallenge.domain.core.domain.Pedido;
 import api.techchallenge.domain.core.domain.Produto;
-import api.techchallenge.infrastructure.db.postgres.entity.ItemEntity;
-import api.techchallenge.infrastructure.db.postgres.entity.PedidoEntity;
-import api.techchallenge.infrastructure.db.postgres.entity.ProdutoEntity;
+import api.techchallenge.infrastructure.db.entity.ItemEntity;
+import api.techchallenge.infrastructure.db.entity.PedidoEntity;
+import api.techchallenge.infrastructure.db.entity.ProdutoEntity;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 

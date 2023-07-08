@@ -1,4 +1,4 @@
-package api.techchallenge.infrastructure.db.postgres.entity;
+package api.techchallenge.infrastructure.db.entity;
 
 import api.techchallenge.domain.core.enums.StatusPagamento;
 import api.techchallenge.domain.core.enums.StatusPedido;
