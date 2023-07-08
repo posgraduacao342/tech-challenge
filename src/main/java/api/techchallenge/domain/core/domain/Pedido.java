@@ -6,7 +6,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.math.BigDecimal;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -14,5 +15,14 @@ public class Pedido extends BaseEntity {
     private StatusPedido statusPedido;
     private BigDecimal preco;
     private StatusPagamento statusPagamento;
-    private Set<Item> itens;
+    private List<Item> itens;
+
+    public Pedido() {
+        this.itens = new ArrayList<>();
+    }
+
+    public void adicionarItem(Item item){
+        var listaItem = this.getItens();
+        listaItem.add(item);
+    }
 }

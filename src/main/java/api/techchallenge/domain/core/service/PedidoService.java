@@ -50,6 +50,9 @@ public class PedidoService implements PedidoServicePort {
         if (pedidoOptional.get().getStatusPedido() != null) {
             pedido.setStatusPedido(pedidoOptional.get().getStatusPedido());
         }
+        if (pedidoOptional.get().getItens() != null) {
+            pedido.setItens(pedidoOptional.get().getItens());
+        }
         if (pedidoOptional.get().getPreco() != null) {
             pedido.setPreco(pedidoOptional.get().getPreco());
         }

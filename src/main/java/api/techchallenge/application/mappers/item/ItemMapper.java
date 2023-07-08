@@ -1,5 +1,6 @@
-package api.techchallenge.application.mappers;
+package api.techchallenge.application.mappers.item;
 
+import api.techchallenge.application.mappers.produto.ProdutoMapper;
 import api.techchallenge.application.mappers.pedido.PedidoEntityParaPedidoMapper;
 import api.techchallenge.application.requests.item.CriarItemRequest;
 import api.techchallenge.domain.core.domain.Item;

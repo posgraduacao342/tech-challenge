@@ -1,6 +1,6 @@
 package api.techchallenge.domain.core.service;
 
-import api.techchallenge.application.mappers.ProdutoMapper;
+import api.techchallenge.application.mappers.produto.ProdutoMapper;
 import api.techchallenge.application.requests.produto.AtualizarProdutoRequest;
 import api.techchallenge.domain.core.domain.Produto;
 import api.techchallenge.domain.core.enums.Categoria;

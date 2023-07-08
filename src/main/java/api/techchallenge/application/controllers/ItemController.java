@@ -1,6 +1,6 @@
 package api.techchallenge.application.controllers;
 
-import api.techchallenge.application.mappers.ItemMapper;
+import api.techchallenge.application.mappers.item.ItemMapper;
 import api.techchallenge.domain.core.domain.Item;
 import api.techchallenge.domain.ports.in.ItemServicePort;
 import org.springframework.http.HttpStatus;

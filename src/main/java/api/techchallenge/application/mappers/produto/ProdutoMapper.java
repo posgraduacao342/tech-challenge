@@ -1,4 +1,4 @@
-package api.techchallenge.application.mappers;
+package api.techchallenge.application.mappers.produto;
 
 import api.techchallenge.application.requests.produto.AtualizarProdutoRequest;
 import api.techchallenge.application.requests.produto.CriarProdutoRequest;
