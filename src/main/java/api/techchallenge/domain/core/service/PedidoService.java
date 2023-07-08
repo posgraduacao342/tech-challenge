@@ -77,6 +77,9 @@ public class PedidoService implements PedidoServicePort {
         if (pedidoOptional.get().getStatusPagamento() != null) {
             pedido.setStatusPagamento(pedidoOptional.get().getStatusPagamento());
         }
+        if (pedidoOptional.get().getDataRecebimento() != null) {
+            pedido.setDataRecebimento(pedidoOptional.get().getDataRecebimento());
+        }
         if (pedidoOptional.get().getStatusPedido() != null) {
             if (pedido.getStatusPedido() == StatusPedido.NAO_RECEBIDO && pedidoOptional.get().getStatusPedido() != StatusPedido.RECEBIDO) {
                 pedido.setDataRecebimento(LocalDateTime.now());

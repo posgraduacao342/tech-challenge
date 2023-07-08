@@ -1,5 +1,6 @@
 package api.techchallenge.application.config;
 
+import api.techchallenge.domain.core.service.PagamentoService;
 import api.techchallenge.domain.core.service.PedidoService;
 import api.techchallenge.application.adapters.ClienteAdapter;
 import api.techchallenge.domain.core.service.ClienteService;
@@ -17,5 +18,11 @@ public class Config {
     @Bean
     public PedidoService pedidoService(PedidoAdapter pedidoAdapter) {
         return new PedidoService(pedidoAdapter);
+    }
+
+    @Bean
+    public PagamentoService pagamentoService(PedidoAdapter pedidoAdapter) {
+        var pedidoService = new PedidoService(pedidoAdapter);
+        return new PagamentoService(pedidoService);
     }
 }
