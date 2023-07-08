@@ -1,14 +1,17 @@
 package api.techchallenge.domain.core.service;
 
 import api.techchallenge.domain.core.domain.Pedido;
+import api.techchallenge.domain.core.enums.PedidoSortingOptions;
 import api.techchallenge.domain.core.enums.StatusPagamento;
 import api.techchallenge.domain.core.enums.StatusPedido;
 import api.techchallenge.domain.core.exception.RecursoNaoEncontratoException;
 import api.techchallenge.domain.ports.in.PedidoServicePort;
 import api.techchallenge.domain.ports.out.PedidoAdapterPort;
+import org.springframework.data.domain.Sort;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -24,8 +27,17 @@ public class PedidoService implements PedidoServicePort {
     }
 
     @Override
-    public List<Pedido> buscarPedidos() {
-        return this.pedidoAdapterPort.buscarPedidos();
+    public List<Pedido> buscarPedidos(Optional<PedidoSortingOptions> sortingProperty, Optional<Sort.Direction> direction) {
+        return this.pedidoAdapterPort.buscarPedidos(sortingProperty, direction);
+    }
+
+    @Override
+    public List<Pedido> buscarFilaDePedidos() {
+        List<StatusPedido> statusPedidoList = new ArrayList<>();
+        statusPedidoList.add(StatusPedido.RECEBIDO);
+        statusPedidoList.add(StatusPedido.EM_PREPARACAO);
+
+        return this.pedidoAdapterPort.buscarPedidosPorStatusPedido(statusPedidoList, PedidoSortingOptions.DATA_RECEBIMENTO, Sort.Direction.ASC);
     }
 
     @Override
@@ -38,8 +50,14 @@ public class PedidoService implements PedidoServicePort {
     public Pedido salvarPedido(Pedido pedido) {
         pedido.setDataCriacao(LocalDateTime.now(ZoneId.of("UTC")));
         pedido.setDataAtualizacao(LocalDateTime.now(ZoneId.of("UTC")));
-        pedido.setStatusPedido(StatusPedido.NAO_RECEBIDO);
-        pedido.setStatusPagamento(StatusPagamento.AGUARDANDO_PAGAMENTO);
+
+        if (pedido.getStatusPagamento() == null) {
+            pedido.setStatusPagamento(StatusPagamento.AGUARDANDO_PAGAMENTO);
+        }
+        if (pedido.getStatusPedido() == null) {
+            pedido.setStatusPedido(StatusPedido.NAO_RECEBIDO);
+        }
+
         return this.pedidoAdapterPort.salvarPedido(pedido);
     }
 
@@ -58,6 +76,12 @@ public class PedidoService implements PedidoServicePort {
         }
         if (pedidoOptional.get().getStatusPagamento() != null) {
             pedido.setStatusPagamento(pedidoOptional.get().getStatusPagamento());
+        }
+        if (pedidoOptional.get().getStatusPedido() != null) {
+            if (pedido.getStatusPedido() == StatusPedido.NAO_RECEBIDO && pedidoOptional.get().getStatusPedido() != StatusPedido.RECEBIDO) {
+                pedido.setDataRecebimento(LocalDateTime.now());
+            }
+            pedido.setStatusPedido(pedidoOptional.get().getStatusPedido());
         }
         pedido.setDataAtualizacao(LocalDateTime.now(ZoneId.of("UTC")));
 

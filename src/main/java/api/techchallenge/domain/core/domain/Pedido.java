@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +17,7 @@ public class Pedido extends BaseEntity {
     private BigDecimal preco;
     private StatusPagamento statusPagamento;
     private List<Item> itens;
+    private LocalDateTime dataRecebimento;
 
     public Pedido() {
         this.itens = new ArrayList<>();

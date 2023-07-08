@@ -5,11 +5,13 @@ import api.techchallenge.application.requests.pedido.AtualizarPedidoRequest;
 import api.techchallenge.application.requests.pedido.CriarPedidoRequest;
 import api.techchallenge.application.responses.pedido.PedidoResponse;
 import api.techchallenge.domain.core.domain.Pedido;
+import api.techchallenge.domain.core.enums.PedidoSortingOptions;
 import api.techchallenge.domain.ports.in.PedidoServicePort;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,8 +30,14 @@ public class PedidoController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
-    public List<Pedido> buscarPedidos() {
-        return this.pedidoServicePort.buscarPedidos();
+    public List<Pedido> buscarPedidos(Optional<PedidoSortingOptions> sortingProperty, Optional<Sort.Direction> direction) {
+        return this.pedidoServicePort.buscarPedidos(sortingProperty, direction);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping(value = "/fila")
+    public List<Pedido> buscarFilaDePedidos() {
+        return this.pedidoServicePort.buscarFilaDePedidos();
     }
 
     @GetMapping(value = "/{pedidoId}")
