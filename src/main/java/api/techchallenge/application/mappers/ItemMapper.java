@@ -1,7 +1,5 @@
-package api.techchallenge.application.mappers.item;
+package api.techchallenge.application.mappers;
 
-import api.techchallenge.application.mappers.produto.ProdutoMapper;
-import api.techchallenge.application.mappers.pedido.PedidoEntityParaPedidoMapper;
 import api.techchallenge.application.requests.item.CriarItemRequest;
 import api.techchallenge.domain.core.domain.Item;
 import api.techchallenge.domain.core.domain.Pedido;
@@ -15,7 +13,6 @@ import org.springframework.stereotype.Component;
 @Component
 @AllArgsConstructor
 public class ItemMapper {
-    private final PedidoEntityParaPedidoMapper pedidoEntityParaPedidoMapper;
     private final ProdutoMapper produtoMapper;
 
     public ItemEntity toEntity(Item item) {

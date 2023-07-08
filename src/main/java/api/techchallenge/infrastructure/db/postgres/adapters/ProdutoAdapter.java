@@ -1,7 +1,7 @@
 package api.techchallenge.infrastructure.db.postgres.adapters;
 
 
-import api.techchallenge.application.mappers.produto.ProdutoMapper;
+import api.techchallenge.application.mappers.ProdutoMapper;
 import api.techchallenge.domain.core.domain.Produto;
 import api.techchallenge.domain.core.enums.Categoria;
 import api.techchallenge.domain.core.exception.RecursoNaoEncontratoException;

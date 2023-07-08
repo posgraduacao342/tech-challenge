@@ -1,6 +1,6 @@
 package api.techchallenge.application.controllers;
 
-import api.techchallenge.application.mappers.cliente.ClienteRequestParaClienteMapper;
+import api.techchallenge.application.mappers.ClienteMapper;
 import api.techchallenge.application.requests.cliente.AtualizarClienteRequest;
 import api.techchallenge.application.requests.cliente.CriarClienteRequest;
 import api.techchallenge.domain.core.domain.Cliente;
@@ -24,8 +24,7 @@ import org.springframework.web.bind.annotation.*;
 public class ClienteController {
 
     private final ClienteServicePort clienteServicePort;
-
-    private final ClienteRequestParaClienteMapper clienteRequestParaClienteMapper;
+    private final ClienteMapper clienteMapper;
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
@@ -41,7 +40,7 @@ public class ClienteController {
 
     @PostMapping
     public Cliente salvarCliente(@RequestBody @Valid CriarClienteRequest clienteRequest) {
-        var cliente = clienteRequestParaClienteMapper.mapper(clienteRequest);
+        var cliente = clienteMapper.toDomain(clienteRequest);
         return this.clienteServicePort.criarNovoCliente(cliente);
     }
 

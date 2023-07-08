@@ -1,7 +1,6 @@
 package api.techchallenge.application.controllers;
 
-import api.techchallenge.application.mappers.pedido.PedidoParaPedidoResponse;
-import api.techchallenge.application.mappers.pedido.PedidoRequestParaPedidoMapper;
+import api.techchallenge.application.mappers.PedidoMapper;
 import api.techchallenge.application.requests.pedido.AtualizarPedidoRequest;
 import api.techchallenge.application.requests.pedido.CriarPedidoRequest;
 import api.techchallenge.application.responses.pedido.PedidoResponse;
@@ -25,10 +24,7 @@ import java.util.UUID;
 public class PedidoController {
 
     private final PedidoServicePort pedidoServicePort;
-
-    private final PedidoRequestParaPedidoMapper pedidoRequestParaPedidoMapper;
-
-    private final PedidoParaPedidoResponse pedidoParaPedidoResponse;
+    private final PedidoMapper pedidoMapper;
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
@@ -43,8 +39,8 @@ public class PedidoController {
 
     @PostMapping
     public PedidoResponse salvarPedido(@RequestBody @Valid CriarPedidoRequest pedidoRequest) {
-        var pedido = pedidoRequestParaPedidoMapper.mapper(pedidoRequest);
-        return pedidoParaPedidoResponse.mapper(this.pedidoServicePort.salvarPedido(pedido));
+        var pedido = pedidoMapper.toDomain(pedidoRequest);
+        return pedidoMapper.toResponse(this.pedidoServicePort.salvarPedido(pedido));
     }
 
     @PatchMapping(value = "/{pedidoId}")

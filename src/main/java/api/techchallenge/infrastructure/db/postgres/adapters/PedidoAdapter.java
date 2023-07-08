@@ -1,7 +1,6 @@
 package api.techchallenge.infrastructure.db.postgres.adapters;
 
-import api.techchallenge.application.mappers.pedido.PedidoEntityParaPedidoMapper;
-import api.techchallenge.application.mappers.pedido.PedidoParaPedidoEntityMapper;
+import api.techchallenge.application.mappers.PedidoMapper;
 import api.techchallenge.domain.core.domain.Pedido;
 import api.techchallenge.domain.core.exception.RecursoNaoEncontratoException;
 import api.techchallenge.domain.ports.out.PedidoAdapterPort;
@@ -22,10 +21,7 @@ import static java.text.MessageFormat.format;
 @AllArgsConstructor
 public class PedidoAdapter implements PedidoAdapterPort {
     private final PedidoRepository pedidoRepository;
-
-    private final PedidoEntityParaPedidoMapper pedidoEntityParaPedidoMapper;
-
-    private final PedidoParaPedidoEntityMapper pedidoParaPedidoEntityMapper;
+    private final PedidoMapper pedidoMapper;
 
     @org.springframework.transaction.annotation.Transactional(readOnly = true)
     @Override
@@ -34,7 +30,7 @@ public class PedidoAdapter implements PedidoAdapterPort {
         List<Pedido> pedidos = new ArrayList<Pedido>();
 
         for (PedidoEntity pedidoEntity : pedidosEntity) {
-            pedidos.add(this.pedidoEntityParaPedidoMapper.mapper(pedidoEntity));
+            pedidos.add(pedidoMapper.toDomain(pedidoEntity));
         }
         return pedidos;
     }
@@ -45,14 +41,14 @@ public class PedidoAdapter implements PedidoAdapterPort {
         var pedidoEntity = pedidoRepository.findById(id)
                 .orElseThrow(() -> new RecursoNaoEncontratoException(format("Registro não encontrado com código {0}", id)));
 
-        return Optional.of(this.pedidoEntityParaPedidoMapper.mapper(pedidoEntity));
+        return Optional.of(pedidoMapper.toDomain(pedidoEntity));
     }
 
     @Transactional
     @Override
     public Pedido salvarPedido(Pedido pedido) {
-        var pedidoEntity = this.pedidoParaPedidoEntityMapper.mapper(pedido);
-        return pedidoEntityParaPedidoMapper.mapper(pedidoRepository.save(pedidoEntity));
+        var pedidoEntity = pedidoMapper.toEntity(pedido);
+        return pedidoMapper.toDomain(pedidoRepository.save(pedidoEntity));
     }
 
     @Transactional

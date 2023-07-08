@@ -1,6 +1,6 @@
 package api.techchallenge.infrastructure.db.postgres.adapters;
 
-import api.techchallenge.application.mappers.item.ItemMapper;
+import api.techchallenge.application.mappers.ItemMapper;
 import api.techchallenge.application.requests.item.AtualizarItemRequest;
 import api.techchallenge.domain.core.domain.Item;
 import api.techchallenge.domain.ports.out.ItemAdapterPort;

@@ -1,10 +1,9 @@
 package api.techchallenge.infrastructure.db.postgres.adapters;
 
 
+import api.techchallenge.application.mappers.ClienteMapper;
 import api.techchallenge.domain.core.exception.RecursoNaoEncontratoException;
 import api.techchallenge.infrastructure.db.postgres.entity.ClienteEntity;
-import api.techchallenge.application.mappers.cliente.ClienteEntityParaClienteMapper;
-import api.techchallenge.application.mappers.cliente.ClienteParaClienteEntityMapper;
 import api.techchallenge.infrastructure.db.postgres.repositories.ClienteRepository;
 import api.techchallenge.domain.core.domain.Cliente;
 import api.techchallenge.domain.ports.out.ClienteAdapterPort;
@@ -23,10 +22,7 @@ import static java.text.MessageFormat.format;
 @AllArgsConstructor
 public class ClienteAdapter implements ClienteAdapterPort {
     private final ClienteRepository clienteRepository;
-
-    private final ClienteEntityParaClienteMapper clienteEntityParaClienteMapper;
-
-    private final ClienteParaClienteEntityMapper clienteParaClienteEntityMapper;
+    private final ClienteMapper clienteMapper;
 
     @Transactional(readOnly = true)
     @Override
@@ -35,7 +31,7 @@ public class ClienteAdapter implements ClienteAdapterPort {
         List<Cliente> clientes = new ArrayList<Cliente>();
 
         for (ClienteEntity clienteEntity : clientesEntity) {
-            clientes.add(this.clienteEntityParaClienteMapper.mapper(clienteEntity));
+            clientes.add(clienteMapper.toDomain(clienteEntity));
         }
         return clientes;
     }
@@ -46,7 +42,7 @@ public class ClienteAdapter implements ClienteAdapterPort {
         var clienteEntity = clienteRepository.findById(id)
                 .orElseThrow(() -> new RecursoNaoEncontratoException(format("Registro não encontrado com código {0}", id)));
 
-        return Optional.of(this.clienteEntityParaClienteMapper.mapper(clienteEntity));
+        return Optional.of(clienteMapper.toDomain(clienteEntity));
     }
 
     @Transactional
@@ -58,7 +54,7 @@ public class ClienteAdapter implements ClienteAdapterPort {
     @Transactional
     @Override
     public Cliente salvarCliente(Cliente cliente) {
-        var clienteEntity = this.clienteParaClienteEntityMapper.mapper(cliente);
-        return clienteEntityParaClienteMapper.mapper(clienteRepository.save(clienteEntity));
+        var clienteEntity = clienteMapper.toEntity(cliente);
+        return clienteMapper.toDomain(clienteRepository.save(clienteEntity));
     }
 }
