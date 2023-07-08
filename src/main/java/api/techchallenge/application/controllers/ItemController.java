@@ -14,7 +14,6 @@ import java.util.UUID;
 @RequestMapping("/itens")
 public class ItemController {
     private final ItemServicePort itemService;
-    private final ItemMapper itemMapper;
 
     public ItemController(ItemServicePort itemService, ItemMapper itemMapper) {
         this.itemService = itemService;

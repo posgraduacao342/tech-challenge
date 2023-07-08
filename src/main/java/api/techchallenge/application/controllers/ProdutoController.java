@@ -44,7 +44,7 @@ public class ProdutoController {
     }
 
     @GetMapping(value = "/{produtoId}")
-    public Produto buscarProdutoPorId(@PathVariable(value = "produtoId") String produtoId) throws UserPrincipalNotFoundException {
+    public Produto buscarProdutoPorId(@PathVariable(value = "produtoId") String produtoId) {
         return this.produtoServicePort.buscarProdutoPorId(UUID.fromString(produtoId));
     }
 
