@@ -15,7 +15,6 @@ import java.util.UUID;
 
 import static java.text.MessageFormat.format;
 
-@Service
 @AllArgsConstructor
 public class ProdutoService implements ProdutoServicePort {
     private final ProdutoAdapterPort produtoAdapterPort;
