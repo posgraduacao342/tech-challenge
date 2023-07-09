@@ -12,7 +12,6 @@ import api.techchallenge.domain.ports.in.PedidoServicePort;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.nio.file.attribute.UserPrincipalNotFoundException;
@@ -29,13 +28,11 @@ public class PedidoController {
     private final PedidoMapper pedidoMapper;
     private final GenericMapper pedidoGMapper;
 
-    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public List<Pedido> buscarPedidos(Optional<PedidoSortingOptions> sortingProperty, Optional<Sort.Direction> direction) {
         return this.pedidoServicePort.buscarPedidos(sortingProperty, direction);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = "/fila")
     public List<Pedido> buscarFilaDePedidos() {
         return this.pedidoServicePort.buscarFilaDePedidos();
