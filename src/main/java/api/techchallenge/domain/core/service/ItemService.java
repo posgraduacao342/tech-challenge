@@ -4,7 +4,6 @@ import api.techchallenge.domain.core.domain.Item;
 import api.techchallenge.domain.ports.in.ItemServicePort;
 import api.techchallenge.domain.ports.out.ItemAdapterPort;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;

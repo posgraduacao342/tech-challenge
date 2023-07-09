@@ -8,7 +8,6 @@ import api.techchallenge.domain.core.exception.RecursoNaoEncontratoException;
 import api.techchallenge.domain.ports.in.ProdutoServicePort;
 import api.techchallenge.domain.ports.out.ProdutoAdapterPort;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
