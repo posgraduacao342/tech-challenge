@@ -59,10 +59,7 @@ public class ClienteAdapter implements ClienteAdapterPort {
     public boolean clienteExiste(String cpf, String email) {
         var clienteEntity = clienteRepository.findByCpf(cpf);
 
-        if(clienteEntity.isPresent()) {
-            return true;
-        }
-        return false;
+        return clienteEntity.isPresent();
     }
 
     @Transactional
