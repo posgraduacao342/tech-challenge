@@ -13,6 +13,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class Pedido extends BaseEntity {
+    private Cliente cliente;
     private StatusPedido statusPedido;
     private BigDecimal preco;
     private StatusPagamento statusPagamento;

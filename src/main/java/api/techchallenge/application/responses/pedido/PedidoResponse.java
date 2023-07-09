@@ -1,5 +1,6 @@
 package api.techchallenge.application.responses.pedido;
 
+import api.techchallenge.application.responses.cliente.ClienteResponse;
 import api.techchallenge.application.responses.item.ItemResponse;
 import api.techchallenge.domain.core.enums.StatusPagamento;
 import api.techchallenge.domain.core.enums.StatusPedido;
@@ -15,6 +16,7 @@ import java.util.UUID;
 public class PedidoResponse {
 
     private UUID id;
+    private ClienteResponse cliente;
     private LocalDateTime dataCriacao;
     private LocalDateTime dataDelecao;
     private LocalDateTime dataAtualizacao;

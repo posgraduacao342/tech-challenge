@@ -1,11 +1,14 @@
 package api.techchallenge.application.mappers;
 
 import api.techchallenge.application.requests.pedido.CriarPedidoRequest;
+import api.techchallenge.application.responses.cliente.ClienteResponse;
 import api.techchallenge.application.responses.item.ItemResponse;
 import api.techchallenge.application.responses.pedido.PedidoResponse;
+import api.techchallenge.domain.core.domain.Cliente;
 import api.techchallenge.domain.core.domain.Item;
 import api.techchallenge.domain.core.domain.Pedido;
 import api.techchallenge.domain.core.domain.Produto;
+import api.techchallenge.infrastructure.db.entity.ClienteEntity;
 import api.techchallenge.infrastructure.db.entity.ItemEntity;
 import api.techchallenge.infrastructure.db.entity.PedidoEntity;
 import api.techchallenge.infrastructure.db.entity.ProdutoEntity;
@@ -16,10 +19,16 @@ import org.springframework.stereotype.Component;
 @Component
 @AllArgsConstructor
 public class PedidoMapper {
-    private final GenericMapper pedidoGenericMapper;
+    private final GenericMapper genericMapper;
 
     public Pedido toDomain(CriarPedidoRequest pedidoRequest) {
         var pedido = new Pedido();
+
+        if (pedidoRequest.getIdCliente() != null){
+            var cliente = new Cliente();
+            cliente.setId(pedidoRequest.getIdCliente());
+            pedido.setCliente(cliente);
+        }
 
         pedidoRequest.getItens().forEach(itensRequest ->{
             var item = new Item();
@@ -29,23 +38,37 @@ public class PedidoMapper {
             item.setProduto(produto);
             pedido.adicionarItem(item);
         });
+
         BeanUtils.copyProperties(pedidoRequest, pedido);
+
         return pedido;
     }
 
     public Pedido toDomain(PedidoEntity pedidoEntity) {
-        Pedido pedido = pedidoGenericMapper.toTransform(pedidoEntity, Pedido.class);
+        Pedido pedido = genericMapper.toTransform(pedidoEntity, Pedido.class);
         pedidoEntity.getItens().forEach(itemEntity ->{
-            var item = pedidoGenericMapper.toTransform(itemEntity, Item.class);
-            var produto = pedidoGenericMapper.toTransform(itemEntity.getProduto(), Produto.class);
+            var item = genericMapper.toTransform(itemEntity, Item.class);
+            var produto = genericMapper.toTransform(itemEntity.getProduto(), Produto.class);
             item.setProduto(produto);
             pedido.adicionarItem(item);
         });
+
+        if (pedidoEntity.getCliente() != null){
+            var cliente = genericMapper.toTransform(pedidoEntity.getCliente(), Cliente.class);
+            pedido.setCliente(cliente);
+        }
+
         return pedido;
     }
 
     public PedidoEntity toEntity(Pedido pedido) {
         var pedidoEntity = new PedidoEntity();
+
+        if (pedido.getCliente() != null){
+            var cliente = new ClienteEntity();
+            pedidoEntity.setCliente(genericMapper.toTransform(pedido.getCliente(), cliente.getClass()));
+        }
+
         BeanUtils.copyProperties(pedido, pedidoEntity);
 
         pedido.getItens().forEach(item -> {
@@ -72,6 +95,12 @@ public class PedidoMapper {
             BeanUtils.copyProperties(item, itemResponse);
             pedidoResponse.adicionarItem(itemResponse);
         });
+
+        if (pedido.getCliente() != null){
+            var cliente = genericMapper.toTransform(pedido.getCliente(), ClienteResponse.class);
+            pedidoResponse.setCliente(cliente);
+        }
+
         BeanUtils.copyProperties(pedido, pedidoResponse);
         return pedidoResponse;
     }

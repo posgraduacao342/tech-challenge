@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -33,11 +34,14 @@ public class PedidoEntity extends BaseEntity {
     @Column()
     private LocalDateTime dataRecebimento;
 
+    @ManyToOne
+    @JoinColumn(name = "id_cliente")
+    private ClienteEntity cliente;
+
     @Override
     public String toString() {
         return "PedidoEntity{" +
                 "id=" + super.getId() +
-                // Adicione outros campos desejados...
                 '}';
     }
 

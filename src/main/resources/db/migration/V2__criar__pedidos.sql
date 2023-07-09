@@ -2,6 +2,7 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE TABLE pedidos (
                           id UUID NOT NULL DEFAULT uuid_generate_v4(),
+                          id_cliente UUID,
                           status_pedido varchar(50) NOT NULL,
                           preco money NOT NULL,
                           status_pagamento varchar(50) NOT NULL,
@@ -9,5 +10,6 @@ CREATE TABLE pedidos (
                           data_criacao timestamptz NOT NULL DEFAULT now(),
                           data_delecao timestamptz,
                           data_atualizacao timestamptz NOT NULL DEFAULT now(),
-                          CONSTRAINT pedidos_pkey PRIMARY KEY (id)
+                          CONSTRAINT pedidos_pkey PRIMARY KEY (id),
+                          CONSTRAINT fk_clientes FOREIGN KEY (id_cliente) REFERENCES clientes (id)
 )
