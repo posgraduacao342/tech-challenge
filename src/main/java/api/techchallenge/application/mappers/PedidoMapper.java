@@ -9,11 +9,15 @@ import api.techchallenge.domain.core.domain.Produto;
 import api.techchallenge.infrastructure.db.entity.ItemEntity;
 import api.techchallenge.infrastructure.db.entity.PedidoEntity;
 import api.techchallenge.infrastructure.db.entity.ProdutoEntity;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
 @Component
+@AllArgsConstructor
 public class PedidoMapper {
+    private final GenericMapper pedidoGenericMapper;
+
     public Pedido toDomain(CriarPedidoRequest pedidoRequest) {
         var pedido = new Pedido();
 
@@ -30,16 +34,13 @@ public class PedidoMapper {
     }
 
     public Pedido toDomain(PedidoEntity pedidoEntity) {
-        var pedido = new Pedido();
-        pedidoEntity.getItens().forEach(itensRequest ->{
-            var item = new Item();
-            var produto = new Produto();
-            produto.setId(itensRequest.getProduto().getId());
-            BeanUtils.copyProperties(itensRequest, item);
+        Pedido pedido = pedidoGenericMapper.toTransform(pedidoEntity, Pedido.class);
+        pedidoEntity.getItens().forEach(itemEntity ->{
+            var item = pedidoGenericMapper.toTransform(itemEntity, Item.class);
+            var produto = pedidoGenericMapper.toTransform(itemEntity.getProduto(), Produto.class);
             item.setProduto(produto);
             pedido.adicionarItem(item);
         });
-        BeanUtils.copyProperties(pedidoEntity, pedido);
         return pedido;
     }
 
