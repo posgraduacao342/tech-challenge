@@ -54,6 +54,17 @@ public class ClienteAdapter implements ClienteAdapterPort {
         return Optional.of(clienteMapper.toDomain(clienteEntity));
     }
 
+    @Transactional(readOnly = true)
+    @Override
+    public boolean clienteExiste(String cpf, String email) {
+        var clienteEntity = clienteRepository.findByCpf(cpf);
+
+        if(clienteEntity.isPresent()) {
+            return true;
+        }
+        return false;
+    }
+
     @Transactional
     @Override
     public void deletarCliente(UUID id) {

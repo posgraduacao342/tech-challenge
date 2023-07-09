@@ -1,6 +1,7 @@
 package api.techchallenge.domain.ports.in;
 
 import api.techchallenge.domain.core.domain.Cliente;
+import api.techchallenge.domain.core.exception.RecursoJaExisteException;
 import api.techchallenge.domain.core.exception.RecursoNaoEncontratoException;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public interface ClienteServicePort {
 
     void deletarCliente(UUID id);
 
-    Cliente criarNovoCliente(Cliente cliente);
+    Cliente criarNovoCliente(Cliente cliente) throws RecursoJaExisteException;
 
     Cliente atualizarCliente(Optional<Cliente> clienteOpcional, UUID id) throws RecursoNaoEncontratoException;
 }

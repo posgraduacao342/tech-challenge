@@ -1,6 +1,7 @@
 package api.techchallenge.domain.core.service;
 
 import api.techchallenge.domain.core.domain.Cliente;
+import api.techchallenge.domain.core.exception.RecursoJaExisteException;
 import api.techchallenge.domain.core.exception.RecursoNaoEncontratoException;
 import api.techchallenge.domain.ports.in.ClienteServicePort;
 import api.techchallenge.domain.ports.out.ClienteAdapterPort;
@@ -44,7 +45,12 @@ public class ClienteService implements ClienteServicePort {
     }
 
     @Override
-    public Cliente criarNovoCliente(Cliente cliente) {
+    public Cliente criarNovoCliente(Cliente cliente) throws RecursoJaExisteException {
+        var optionalCliente = this.clienteAdapterPort.clienteExiste(cliente.getCpf(), cliente.getEmail());
+
+        if(optionalCliente) {
+            throw  new RecursoJaExisteException("Email ou Cpf já possui cadastro");
+        }
         cliente.setDataCriacao(LocalDateTime.now(ZoneId.of("UTC")));
         cliente.setDataAtualizacao(LocalDateTime.now(ZoneId.of("UTC")));
 

@@ -17,4 +17,6 @@ public interface ClienteAdapterPort {
     void deletarCliente(UUID id);
 
     Cliente salvarCliente(Cliente cliente);
+
+    boolean clienteExiste(String cpf, String email);
 }

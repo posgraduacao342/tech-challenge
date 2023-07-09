@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import api.techchallenge.domain.core.exception.RecursoJaExisteException;
 import api.techchallenge.domain.ports.in.ClienteServicePort;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -44,7 +45,7 @@ public class ClienteController {
     }
 
     @PostMapping
-    public Cliente salvarCliente(@RequestBody @Valid CriarClienteRequest clienteRequest) {
+    public Cliente salvarCliente(@RequestBody @Valid CriarClienteRequest clienteRequest) throws RecursoJaExisteException {
         var cliente = clienteMapper.toTransform(clienteRequest, Cliente.class);
         return this.clienteServicePort.criarNovoCliente(cliente);
     }

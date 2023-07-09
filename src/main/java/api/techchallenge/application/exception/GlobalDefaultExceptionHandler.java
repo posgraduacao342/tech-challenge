@@ -1,5 +1,6 @@
 package api.techchallenge.application.exception;
 
+import api.techchallenge.domain.core.exception.RecursoJaExisteException;
 import api.techchallenge.domain.core.exception.RecursoNaoEncontratoException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
@@ -18,6 +19,16 @@ public class GlobalDefaultExceptionHandler extends ResponseEntityExceptionHandle
         problemDetail.setTitle(HttpStatus.NOT_FOUND.getReasonPhrase());
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(problemDetail);
+
+    }
+
+    @ExceptionHandler(RecursoJaExisteException.class)
+    private ResponseEntity<ProblemDetail> handleResourceBadRequest(RecursoJaExisteException ex) {
+
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
+        problemDetail.setTitle(HttpStatus.BAD_REQUEST.getReasonPhrase());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(problemDetail);
 
     }
 }
