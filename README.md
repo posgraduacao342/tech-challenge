@@ -31,14 +31,14 @@ Abra o navegador e cole a url: http://localhost:8080/swagger-ui/index.html
 - Coloque as informações descritas no payload e envie a request
 
 ## Pedido
-- Acesse o enpoint de produtos GET - /produtos e envia a request
-- Acesse o endpoint de pedido POST - /pedidos e informe os produtos desejados
+- Acesse o endpoint de produtos GET - /produtos para verificar e escolher os produtos a serem adicionados ao pedido
+- Acesse o endpoint de pedido POST - /pedidos e informe os itens que deseja adicionar especificando o id do produto desejado
 
 ## Pagamento
 - Acesse o enpoint de pagamento POST - /pagamentos e envia a request
 
 ## Fila de pedidos cozinha
-- Acesse o enpoint de pedidos GET - /pedidos/file e envia a request (Usar usuário padrão)
+- Acesse o enpoint de pedidos GET - /pedidos/fila e envia a request (Usar usuário padrão)
 
 ## Atualizar status do pedido (Cozinha)
 - Status: EM_PREPARACAO / PRONTO / FINALIZADO
