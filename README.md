@@ -31,6 +31,7 @@ Abra o navegador e cole a url: http://localhost:8080/swagger-ui/index.html
 - Coloque as informações descritas no payload e envie a request
 
 ## Pedido
+- Acesse o endpoint de GET - /produtos/porCategoria para filtrar os produtos por categoria
 - Acesse o endpoint de produtos GET - /produtos para verificar e escolher os produtos a serem adicionados ao pedido
 - Acesse o endpoint de pedido POST - /pedidos e informe os itens que deseja adicionar especificando o id do produto desejado
 
