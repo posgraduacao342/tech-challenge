@@ -12,6 +12,8 @@ public interface ClienteAdapterPort {
 
     Optional<Cliente> buscarClientePorId(UUID id) throws RecursoNaoEncontratoException;
 
+    Optional<Cliente> buscarClientePorCpf(String cpf) throws RecursoNaoEncontratoException;
+
     void deletarCliente(UUID id);
 
     Cliente salvarCliente(Cliente cliente);

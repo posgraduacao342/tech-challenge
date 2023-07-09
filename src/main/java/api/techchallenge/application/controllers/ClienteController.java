@@ -37,6 +37,12 @@ public class ClienteController {
         return this.clienteServicePort.buscarClientePorId(UUID.fromString(clienteId));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping(value = "/porCpf/{cpf}")
+    public Cliente buscarClientePorCpf(@PathVariable(value = "cpf") String cpf) throws UserPrincipalNotFoundException {
+        return this.clienteServicePort.buscarClientePorCpf(cpf);
+    }
+
     @PostMapping
     public Cliente salvarCliente(@RequestBody @Valid CriarClienteRequest clienteRequest) {
         var cliente = clienteMapper.toTransform(clienteRequest, Cliente.class);

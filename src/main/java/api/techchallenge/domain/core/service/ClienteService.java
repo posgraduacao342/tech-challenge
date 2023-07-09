@@ -33,6 +33,12 @@ public class ClienteService implements ClienteServicePort {
     }
 
     @Override
+    public Cliente buscarClientePorCpf(String cpf) throws RecursoNaoEncontratoException {
+        return clienteAdapterPort.buscarClientePorCpf(cpf)
+                .orElseThrow(() -> new RecursoNaoEncontratoException(format("Registro não encontrado com cpf {0}", cpf)));
+    }
+
+    @Override
     public void deletarCliente(UUID id) {
         this.clienteAdapterPort.deletarCliente(id);
     }

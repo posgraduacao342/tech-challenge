@@ -45,6 +45,15 @@ public class ClienteAdapter implements ClienteAdapterPort {
         return Optional.of(clienteMapper.toDomain(clienteEntity));
     }
 
+    @Transactional(readOnly = true)
+    @Override
+    public Optional<Cliente> buscarClientePorCpf(String cpf) throws RecursoNaoEncontratoException {
+        var clienteEntity = clienteRepository.findByCpf(cpf)
+                .orElseThrow(() -> new RecursoNaoEncontratoException(format("Registro não encontrado com cpf {0}", cpf)));
+
+        return Optional.of(clienteMapper.toDomain(clienteEntity));
+    }
+
     @Transactional
     @Override
     public void deletarCliente(UUID id) {

@@ -12,6 +12,8 @@ public interface ClienteServicePort {
 
     Cliente buscarClientePorId(UUID id) throws RecursoNaoEncontratoException;
 
+    Cliente buscarClientePorCpf(String cpf) throws RecursoNaoEncontratoException;
+
     void deletarCliente(UUID id);
 
     Cliente criarNovoCliente(Cliente cliente);
