@@ -30,6 +30,7 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.GET, "/pedidos/fila").authenticated()
                         .requestMatchers(HttpMethod.GET, "/pedidos/{pedidoId}").permitAll()
                         .requestMatchers(HttpMethod.GET, "/produtos/porCategoria").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/health-check").permitAll()
                         .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults())
