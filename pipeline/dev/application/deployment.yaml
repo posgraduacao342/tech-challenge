@@ -13,9 +13,28 @@ spec:
     spec:
       containers:
         - name: tech-challenge-api
-          image: 1811183/tech-challenge:1.0.0
+          image: 1811183/tech-challenge:1.0.1
           ports:
             - containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: /health-check
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 40     
+          readinessProbe:
+            httpGet:
+              path: /health-check
+              port: 8080
+            initialDelaySeconds: 30
+            failureThreshold: 3
+            periodSeconds: 10 
+          startupProbe:
+            httpGet:
+              path: /health-check
+              port: 8080
+            failureThreshold: 3
+            periodSeconds: 10
           resources:
             limits:
               cpu: "0.5"
