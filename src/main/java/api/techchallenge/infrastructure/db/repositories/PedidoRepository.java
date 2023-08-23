@@ -1,6 +1,6 @@
 package api.techchallenge.infrastructure.db.repositories;
 
-import api.techchallenge.domain.core.enums.StatusPedido;
+import api.techchallenge.domain.enums.StatusPedido;
 import api.techchallenge.infrastructure.db.entity.PedidoEntity;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;

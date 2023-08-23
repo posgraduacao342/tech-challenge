@@ -1,9 +1,9 @@
 package api.techchallenge.application.controllers;
 
-import api.techchallenge.application.mappers.GenericMapper;
-import api.techchallenge.application.requests.item.AtualizarObservacaoItemRequest;
-import api.techchallenge.application.responses.item.ItemResponse;
-import api.techchallenge.domain.core.domain.Item;
+import api.techchallenge.application.presenters.mappers.GenericMapper;
+import api.techchallenge.application.presenters.requests.item.AtualizarObservacaoItemRequest;
+import api.techchallenge.application.presenters.responses.item.ItemResponse;
+import api.techchallenge.domain.entities.Item;
 import api.techchallenge.domain.ports.in.ItemServicePort;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;

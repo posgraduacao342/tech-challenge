@@ -1,12 +1,12 @@
 package api.techchallenge.application.controllers;
 
-import api.techchallenge.application.mappers.GenericMapper;
-import api.techchallenge.application.mappers.PedidoMapper;
-import api.techchallenge.application.requests.pedido.AtualizarPedidoRequest;
-import api.techchallenge.application.requests.pedido.CriarPedidoRequest;
-import api.techchallenge.application.responses.pedido.PedidoResponse;
-import api.techchallenge.domain.core.domain.Pedido;
-import api.techchallenge.domain.core.enums.PedidoSortingOptions;
+import api.techchallenge.application.presenters.mappers.GenericMapper;
+import api.techchallenge.application.presenters.mappers.PedidoMapper;
+import api.techchallenge.application.presenters.requests.pedido.AtualizarPedidoRequest;
+import api.techchallenge.application.presenters.requests.pedido.CriarPedidoRequest;
+import api.techchallenge.application.presenters.responses.pedido.PedidoResponse;
+import api.techchallenge.domain.entities.Pedido;
+import api.techchallenge.domain.enums.PedidoSortingOptions;
 import api.techchallenge.domain.ports.in.PedidoServicePort;
 
 import jakarta.validation.Valid;

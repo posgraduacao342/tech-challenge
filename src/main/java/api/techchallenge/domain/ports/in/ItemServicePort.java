@@ -1,6 +1,6 @@
 package api.techchallenge.domain.ports.in;
 
-import api.techchallenge.domain.core.domain.Item;
+import api.techchallenge.domain.entities.Item;
 
 import java.util.List;
 import java.util.UUID;

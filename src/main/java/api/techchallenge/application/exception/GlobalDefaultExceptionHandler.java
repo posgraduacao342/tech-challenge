@@ -1,7 +1,7 @@
 package api.techchallenge.application.exception;
 
-import api.techchallenge.domain.core.exception.RecursoJaExisteException;
-import api.techchallenge.domain.core.exception.RecursoNaoEncontratoException;
+import api.techchallenge.domain.exception.RecursoJaExisteException;
+import api.techchallenge.domain.exception.RecursoNaoEncontratoException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;

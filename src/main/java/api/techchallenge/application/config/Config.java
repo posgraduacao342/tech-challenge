@@ -1,37 +1,37 @@
 package api.techchallenge.application.config;
 
-import api.techchallenge.application.adapters.ItemAdapter;
-import api.techchallenge.application.adapters.ProdutoAdapter;
-import api.techchallenge.application.mappers.ProdutoMapper;
-import api.techchallenge.domain.core.service.*;
-import api.techchallenge.application.adapters.ClienteAdapter;
-import api.techchallenge.application.adapters.PedidoAdapter;
+import api.techchallenge.application.gateway.ItemGateway;
+import api.techchallenge.application.gateway.ProdutoGateway;
+import api.techchallenge.application.presenters.mappers.ProdutoMapper;
+import api.techchallenge.application.gateway.ClienteGateway;
+import api.techchallenge.application.gateway.PedidoGateway;
+import api.techchallenge.domain.useCases.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class Config {
     @Bean
-    public ClienteService clienteService(ClienteAdapter clienteAdapter) {
-        return new ClienteService(clienteAdapter);
+    public ClienteService clienteService(ClienteGateway clienteGateway) {
+        return new ClienteService(clienteGateway);
     }
 
     @Bean
-    public ItemService itemService(ItemAdapter itemAdapter) { return new ItemService(itemAdapter); }
+    public ItemService itemService(ItemGateway itemGateway) { return new ItemService(itemGateway); }
 
     @Bean
-    public PedidoService pedidoService(PedidoAdapter pedidoAdapter) {
-        return new PedidoService(pedidoAdapter);
+    public PedidoService pedidoService(PedidoGateway pedidoGateway) {
+        return new PedidoService(pedidoGateway);
     }
 
     @Bean
-    public ProdutoService produtoService(ProdutoAdapter produtoAdapter, ProdutoMapper produtoMapper) {
-        return new ProdutoService(produtoAdapter, produtoMapper);
+    public ProdutoService produtoService(ProdutoGateway produtoGateway, ProdutoMapper produtoMapper) {
+        return new ProdutoService(produtoGateway, produtoMapper);
     }
 
     @Bean
-    public PagamentoService pagamentoService(PedidoAdapter pedidoAdapter) {
-        var pedidoService = new PedidoService(pedidoAdapter);
+    public PagamentoService pagamentoService(PedidoGateway pedidoGateway) {
+        var pedidoService = new PedidoService(pedidoGateway);
         return new PagamentoService(pedidoService);
     }
 }

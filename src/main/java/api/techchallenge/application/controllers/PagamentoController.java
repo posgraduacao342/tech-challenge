@@ -1,8 +1,8 @@
 package api.techchallenge.application.controllers;
 
-import api.techchallenge.application.requests.pagamento.PagarPedidoRequest;
-import api.techchallenge.domain.core.exception.RecursoNaoEncontratoException;
-import api.techchallenge.domain.core.service.PagamentoService;
+import api.techchallenge.application.presenters.requests.pagamento.PagarPedidoRequest;
+import api.techchallenge.domain.exception.RecursoNaoEncontratoException;
+import api.techchallenge.domain.useCases.PagamentoService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;

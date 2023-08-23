@@ -1,9 +1,9 @@
 package api.techchallenge.domain.ports.in;
 
-import api.techchallenge.domain.core.domain.Pedido;
-import api.techchallenge.domain.core.enums.PedidoSortingOptions;
-import api.techchallenge.domain.core.enums.StatusPedido;
-import api.techchallenge.domain.core.exception.RecursoNaoEncontratoException;
+import api.techchallenge.domain.entities.Pedido;
+import api.techchallenge.domain.enums.PedidoSortingOptions;
+import api.techchallenge.domain.enums.StatusPedido;
+import api.techchallenge.domain.exception.RecursoNaoEncontratoException;
 import org.springframework.data.domain.Sort;
 
 import java.util.List;

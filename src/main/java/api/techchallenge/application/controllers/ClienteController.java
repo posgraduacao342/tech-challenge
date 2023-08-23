@@ -1,16 +1,16 @@
 package api.techchallenge.application.controllers;
 
-import api.techchallenge.application.mappers.GenericMapper;
-import api.techchallenge.application.requests.cliente.AtualizarClienteRequest;
-import api.techchallenge.application.requests.cliente.CriarClienteRequest;
-import api.techchallenge.domain.core.domain.Cliente;
+import api.techchallenge.application.presenters.mappers.GenericMapper;
+import api.techchallenge.application.presenters.requests.cliente.AtualizarClienteRequest;
+import api.techchallenge.application.presenters.requests.cliente.CriarClienteRequest;
+import api.techchallenge.domain.entities.Cliente;
 
 import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import api.techchallenge.domain.core.exception.RecursoJaExisteException;
+import api.techchallenge.domain.exception.RecursoJaExisteException;
 import api.techchallenge.domain.ports.in.ClienteServicePort;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;

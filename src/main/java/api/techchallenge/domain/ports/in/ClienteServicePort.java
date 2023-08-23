@@ -1,8 +1,8 @@
 package api.techchallenge.domain.ports.in;
 
-import api.techchallenge.domain.core.domain.Cliente;
-import api.techchallenge.domain.core.exception.RecursoJaExisteException;
-import api.techchallenge.domain.core.exception.RecursoNaoEncontratoException;
+import api.techchallenge.domain.entities.Cliente;
+import api.techchallenge.domain.exception.RecursoJaExisteException;
+import api.techchallenge.domain.exception.RecursoNaoEncontratoException;
 
 import java.util.List;
 import java.util.Optional;

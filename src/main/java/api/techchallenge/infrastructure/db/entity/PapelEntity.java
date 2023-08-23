@@ -1,6 +1,6 @@
 package api.techchallenge.infrastructure.db.entity;
 
-import api.techchallenge.domain.core.enums.Papel;
+import api.techchallenge.domain.enums.Papel;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
