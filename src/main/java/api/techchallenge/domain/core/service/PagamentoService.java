@@ -1,6 +1,5 @@
 package api.techchallenge.domain.core.service;
 
-import api.techchallenge.domain.core.domain.Pedido;
 import api.techchallenge.domain.core.enums.StatusPagamento;
 import api.techchallenge.domain.core.enums.StatusPedido;
 import api.techchallenge.domain.core.exception.RecursoNaoEncontratoException;
@@ -9,7 +8,6 @@ import api.techchallenge.domain.ports.in.PedidoServicePort;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.Optional;
 import java.util.UUID;
 
 public class PagamentoService implements PagamentoServicePort {
@@ -32,5 +30,11 @@ public class PagamentoService implements PagamentoServicePort {
 
         this.pedidoServicePort.salvarPedido(pedido);
         return "Pagamento finalizado com sucesso";
+    }
+
+    @Override
+    public String buscarStatusPagamentoPorPedidoId(UUID pedidoId) throws RecursoNaoEncontratoException{
+        var pedido = this.pedidoServicePort.buscarPedidoPorId(pedidoId);
+        return pedido.getStatusPagamento().name();
     }
 }
