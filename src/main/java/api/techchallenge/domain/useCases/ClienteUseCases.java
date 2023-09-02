@@ -3,7 +3,7 @@ package api.techchallenge.domain.useCases;
 import api.techchallenge.domain.entities.Cliente;
 import api.techchallenge.domain.exception.RecursoJaExisteException;
 import api.techchallenge.domain.exception.RecursoNaoEncontratoException;
-import api.techchallenge.domain.ports.in.ClienteServicePort;
+import api.techchallenge.domain.ports.in.ClienteUseCasesPort;
 import api.techchallenge.domain.ports.out.ClienteAdapterPort;
 
 
@@ -15,10 +15,10 @@ import java.util.UUID;
 
 import static java.text.MessageFormat.format;
 
-public class ClienteService implements ClienteServicePort {
+public class ClienteUseCases implements ClienteUseCasesPort {
     private final ClienteAdapterPort clienteAdapterPort;
 
-    public ClienteService(ClienteAdapterPort clienteAdapterPort) {
+    public ClienteUseCases(ClienteAdapterPort clienteAdapterPort) {
         this.clienteAdapterPort = clienteAdapterPort;
     }
 

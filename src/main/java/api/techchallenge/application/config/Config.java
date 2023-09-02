@@ -12,26 +12,26 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class Config {
     @Bean
-    public ClienteService clienteService(ClienteGateway clienteGateway) {
-        return new ClienteService(clienteGateway);
+    public ClienteUseCases clienteUseCases(ClienteGateway clienteGateway) {
+        return new ClienteUseCases(clienteGateway);
     }
 
     @Bean
-    public ItemService itemService(ItemGateway itemGateway) { return new ItemService(itemGateway); }
+    public ItemUseCases itemUseCases(ItemGateway itemGateway) { return new ItemUseCases(itemGateway); }
 
     @Bean
-    public PedidoService pedidoService(PedidoGateway pedidoGateway) {
-        return new PedidoService(pedidoGateway);
+    public PedidoUseCases pedidoUseCases(PedidoGateway pedidoGateway) {
+        return new PedidoUseCases(pedidoGateway);
     }
 
     @Bean
-    public ProdutoService produtoService(ProdutoGateway produtoGateway, ProdutoMapper produtoMapper) {
-        return new ProdutoService(produtoGateway, produtoMapper);
+    public ProdutoUseCases produtoUseCases(ProdutoGateway produtoGateway, ProdutoMapper produtoMapper) {
+        return new ProdutoUseCases(produtoGateway, produtoMapper);
     }
 
     @Bean
-    public PagamentoService pagamentoService(PedidoGateway pedidoGateway) {
-        var pedidoService = new PedidoService(pedidoGateway);
-        return new PagamentoService(pedidoService);
+    public PagamentoUseCases pagamentoUseCases(PedidoGateway pedidoGateway) {
+        var pedidoUseCases = new PedidoUseCases(pedidoGateway);
+        return new PagamentoUseCases(pedidoUseCases);
     }
 }

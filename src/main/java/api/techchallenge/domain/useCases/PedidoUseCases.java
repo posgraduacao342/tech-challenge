@@ -5,7 +5,7 @@ import api.techchallenge.domain.enums.PedidoSortingOptions;
 import api.techchallenge.domain.enums.StatusPagamento;
 import api.techchallenge.domain.enums.StatusPedido;
 import api.techchallenge.domain.exception.RecursoNaoEncontratoException;
-import api.techchallenge.domain.ports.in.PedidoServicePort;
+import api.techchallenge.domain.ports.in.PedidoUseCasesPort;
 import api.techchallenge.domain.ports.out.PedidoAdapterPort;
 import org.springframework.data.domain.Sort;
 
@@ -18,11 +18,11 @@ import java.util.UUID;
 
 import static java.text.MessageFormat.format;
 
-public class PedidoService implements PedidoServicePort {
+public class PedidoUseCases implements PedidoUseCasesPort {
 
     private final PedidoAdapterPort pedidoAdapterPort;
 
-    public PedidoService(PedidoAdapterPort pedidoAdapterPort) {
+    public PedidoUseCases(PedidoAdapterPort pedidoAdapterPort) {
         this.pedidoAdapterPort = pedidoAdapterPort;
     }
 

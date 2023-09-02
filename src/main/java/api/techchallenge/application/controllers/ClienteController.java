@@ -11,7 +11,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import api.techchallenge.domain.exception.RecursoJaExisteException;
-import api.techchallenge.domain.ports.in.ClienteServicePort;
+import api.techchallenge.domain.ports.in.ClienteUseCasesPort;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,37 +23,37 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class ClienteController {
 
-    private final ClienteServicePort clienteServicePort;
+    private final ClienteUseCasesPort clienteUseCasesPort;
     private final GenericMapper clienteMapper;
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public List<Cliente> buscarClientes() {
-        return this.clienteServicePort.buscarClientes();
+        return this.clienteUseCasesPort.buscarClientes();
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = "/{clienteId}")
     public Cliente buscarClientePorId(@PathVariable(value = "clienteId") String clienteId) throws UserPrincipalNotFoundException {
-        return this.clienteServicePort.buscarClientePorId(UUID.fromString(clienteId));
+        return this.clienteUseCasesPort.buscarClientePorId(UUID.fromString(clienteId));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(value = "/porCpf/{cpf}")
     public Cliente buscarClientePorCpf(@PathVariable(value = "cpf") String cpf) throws UserPrincipalNotFoundException {
-        return this.clienteServicePort.buscarClientePorCpf(cpf);
+        return this.clienteUseCasesPort.buscarClientePorCpf(cpf);
     }
 
     @PostMapping
     public Cliente salvarCliente(@RequestBody @Valid CriarClienteRequest clienteRequest) throws RecursoJaExisteException {
         var cliente = clienteMapper.toTransform(clienteRequest, Cliente.class);
-        return this.clienteServicePort.criarNovoCliente(cliente);
+        return this.clienteUseCasesPort.criarNovoCliente(cliente);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping(value = "/{clienteId}")
     public void deletar(@PathVariable(value = "clienteId") String clienteId) {
-        this.clienteServicePort.deletarCliente(UUID.fromString(clienteId));
+        this.clienteUseCasesPort.deletarCliente(UUID.fromString(clienteId));
     }
 
     @PatchMapping(value = "/{clienteId}")
@@ -62,7 +62,7 @@ public class ClienteController {
             @RequestBody @Valid AtualizarClienteRequest atualizarClienteRequest
     ) throws UserPrincipalNotFoundException {
         var cliente = clienteMapper.toTransform(atualizarClienteRequest, Cliente.class);
-        return this.clienteServicePort.atualizarCliente(Optional.of(cliente), UUID.fromString(clienteId));
+        return this.clienteUseCasesPort.atualizarCliente(Optional.of(cliente), UUID.fromString(clienteId));
     }
 
 }

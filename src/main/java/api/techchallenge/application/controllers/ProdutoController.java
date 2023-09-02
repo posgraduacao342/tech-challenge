@@ -5,7 +5,7 @@ import api.techchallenge.application.presenters.requests.produto.AtualizarProdut
 import api.techchallenge.application.presenters.requests.produto.CriarProdutoRequest;
 import api.techchallenge.domain.entities.Produto;
 import api.techchallenge.domain.enums.Categoria;
-import api.techchallenge.domain.ports.in.ProdutoServicePort;
+import api.techchallenge.domain.ports.in.ProdutoUseCasesPort;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,36 +19,36 @@ import java.util.UUID;
 @RequestMapping("/produtos")
 @AllArgsConstructor
 public class ProdutoController {
-    private final ProdutoServicePort produtoServicePort;
+    private final ProdutoUseCasesPort produtoUseCasesPort;
     private final ProdutoMapper produtoMapper;
 
     @PostMapping
     public Produto salvarProduto (@RequestBody @Valid CriarProdutoRequest request){
-        return this.produtoServicePort.criarNovoProduto(produtoMapper.toDomain(request));
+        return this.produtoUseCasesPort.criarNovoProduto(produtoMapper.toDomain(request));
     }
 
     @GetMapping
     public List<Produto> buscarProdutos(){
-        return this.produtoServicePort.buscarProdutos();
+        return this.produtoUseCasesPort.buscarProdutos();
     }
 
     @PatchMapping(value = "/{produtoId}")
     public Produto atualizarProduto(@PathVariable UUID produtoId, @RequestBody AtualizarProdutoRequest request){
-        return this.produtoServicePort.atualizarProduto(produtoId, request);
+        return this.produtoUseCasesPort.atualizarProduto(produtoId, request);
     }
 
     @DeleteMapping(value = "/{produtoId}")
     public void deletarProduto(@PathVariable(value = "produtoId") String produtoId) {
-        this.produtoServicePort.deletarProduto(UUID.fromString(produtoId));
+        this.produtoUseCasesPort.deletarProduto(UUID.fromString(produtoId));
     }
 
     @GetMapping(value = "/{produtoId}")
     public Produto buscarProdutoPorId(@PathVariable(value = "produtoId") String produtoId) {
-        return this.produtoServicePort.buscarProdutoPorId(UUID.fromString(produtoId));
+        return this.produtoUseCasesPort.buscarProdutoPorId(UUID.fromString(produtoId));
     }
 
     @GetMapping(value = "/porCategoria")
     public List<Produto> buscarProdutosPorCategoria(@RequestParam Categoria categoria) {
-        return this.produtoServicePort.buscarProdutosPorCategoria(categoria);
+        return this.produtoUseCasesPort.buscarProdutosPorCategoria(categoria);
     }
 }

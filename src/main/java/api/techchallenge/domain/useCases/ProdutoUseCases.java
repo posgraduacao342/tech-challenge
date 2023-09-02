@@ -5,7 +5,7 @@ import api.techchallenge.application.presenters.requests.produto.AtualizarProdut
 import api.techchallenge.domain.entities.Produto;
 import api.techchallenge.domain.enums.Categoria;
 import api.techchallenge.domain.exception.RecursoNaoEncontratoException;
-import api.techchallenge.domain.ports.in.ProdutoServicePort;
+import api.techchallenge.domain.ports.in.ProdutoUseCasesPort;
 import api.techchallenge.domain.ports.out.ProdutoAdapterPort;
 import lombok.AllArgsConstructor;
 
@@ -15,7 +15,7 @@ import java.util.UUID;
 import static java.text.MessageFormat.format;
 
 @AllArgsConstructor
-public class ProdutoService implements ProdutoServicePort {
+public class ProdutoUseCases implements ProdutoUseCasesPort {
     private final ProdutoAdapterPort produtoAdapterPort;
     private final ProdutoMapper produtoMapper;
 

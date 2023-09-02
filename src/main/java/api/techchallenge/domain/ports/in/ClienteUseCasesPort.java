@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface ClienteServicePort {
+public interface ClienteUseCasesPort {
     List<Cliente> buscarClientes();
 
     Cliente buscarClientePorId(UUID id) throws RecursoNaoEncontratoException;
