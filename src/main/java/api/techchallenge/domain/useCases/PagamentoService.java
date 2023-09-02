@@ -31,4 +31,10 @@ public class PagamentoService implements PagamentoServicePort {
         this.pedidoServicePort.salvarPedido(pedido);
         return "Pagamento finalizado com sucesso";
     }
+
+    @Override
+    public String buscarStatusPagamentoPorPedidoId(UUID pedidoId) throws RecursoNaoEncontratoException{
+        var pedido = this.pedidoServicePort.buscarPedidoPorId(pedidoId);
+        return pedido.getStatusPagamento().name();
+    }
 }

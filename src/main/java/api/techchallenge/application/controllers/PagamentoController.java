@@ -21,4 +21,9 @@ public class PagamentoController {
     public String pagamento(@RequestBody @Valid PagarPedidoRequest pedidoRequest) throws RecursoNaoEncontratoException {
         return this.pagamentoService.pagarPedido(UUID.fromString(pedidoRequest.getPedidoId()));
     }
+
+    @GetMapping("/{pedidoId}")
+    public String buscarStatusPagamento(@PathVariable UUID pedidoId) {
+        return this.pagamentoService.buscarStatusPagamentoPorPedidoId(pedidoId);
+    }
 }
