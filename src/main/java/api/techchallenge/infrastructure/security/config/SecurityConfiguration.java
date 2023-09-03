@@ -23,7 +23,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/swagger-ui/**").permitAll()
                         .requestMatchers(   HttpMethod.POST, "/clientes").permitAll()
                         .requestMatchers(   HttpMethod.PATCH, "/clientes/**").permitAll()
-                        .requestMatchers(   HttpMethod.POST, "/pagamentos").permitAll()
+                        .requestMatchers(   HttpMethod.POST, "/pagamentos/**").permitAll()
                         .requestMatchers(   HttpMethod.GET, "/pedido/**").permitAll()
                         .requestMatchers(   HttpMethod.GET, "/produtos").permitAll()
                         .requestMatchers(   HttpMethod.POST, "/pedidos").permitAll()
