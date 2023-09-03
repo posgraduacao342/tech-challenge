@@ -6,6 +6,7 @@ import api.techchallenge.application.presenters.requests.cliente.CriarClienteReq
 import api.techchallenge.application.presenters.responses.cliente.CriarClienteResponse;
 import api.techchallenge.domain.exception.RecursoJaExisteException;
 import api.techchallenge.domain.ports.in.ClienteServicePort;
+import api.techchallenge.domain.valueObjects.CPF;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
