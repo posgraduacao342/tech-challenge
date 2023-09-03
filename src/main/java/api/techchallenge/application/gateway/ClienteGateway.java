@@ -71,7 +71,7 @@ public class ClienteGateway implements ClienteAdapterPort {
     @Transactional
     @Override
     public Cliente salvarCliente(Cliente cliente) {
-        var clienteEntity = clienteMapper.toEntity(cliente);
-        return clienteMapper.toDomain(clienteRepository.save(clienteEntity));
+        var clienteEntity = clienteMapper.clienteToClienteEntity(cliente);
+        return clienteMapper.clienteEntityToCliente(clienteRepository.save(clienteEntity));
     }
 }
