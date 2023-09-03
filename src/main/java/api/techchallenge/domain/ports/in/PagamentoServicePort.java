@@ -6,5 +6,8 @@ import api.techchallenge.domain.exception.RecursoNaoEncontratoException;
 import java.util.UUID;
 
 public interface PagamentoServicePort {
-    String pagarPedido(UUID pedidoId, StatusPagamento statusPagamento) throws RecursoNaoEncontratoException;
+    String atualizarStatusPagamento(UUID pedidoId, StatusPagamento statusPagamento) throws RecursoNaoEncontratoException;
+    String gerarQrcode(UUID pedidoId) throws RecursoNaoEncontratoException;
+    void validarPagamento(String pedidoId) throws RecursoNaoEncontratoException;
+
 }
