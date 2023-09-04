@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,5 +28,17 @@ public class Pedido extends BaseEntity {
     public void adicionarItem(Item item){
         var listaItem = this.getItens();
         listaItem.add(item);
+    }
+
+    public boolean pagamentoRealizado(){
+        return this.getStatusPagamento() == StatusPagamento.PAGO;
+    }
+
+    public void atualizarStatusPedido(StatusPagamento statusPagamento){
+        if(statusPagamento.equals(StatusPagamento.PAGO)) {
+            this.setStatusPedido(StatusPedido.RECEBIDO);
+        }
+        this.setStatusPagamento(statusPagamento);
+        this.setDataRecebimento(LocalDateTime.now(ZoneId.of("UTC")));
     }
 }

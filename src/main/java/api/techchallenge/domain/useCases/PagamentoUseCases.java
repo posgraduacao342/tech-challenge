@@ -1,40 +1,49 @@
 package api.techchallenge.domain.useCases;
 
+import api.techchallenge.domain.entities.Pedido;
 import api.techchallenge.domain.enums.StatusPagamento;
-import api.techchallenge.domain.enums.StatusPedido;
 import api.techchallenge.domain.exception.RecursoNaoEncontratoException;
 import api.techchallenge.domain.ports.in.PagamentoUseCasesPort;
 import api.techchallenge.domain.ports.in.PedidoUseCasesPort;
+import api.techchallenge.domain.ports.out.PagamentoQrcodeGatewayPort;
+import lombok.AllArgsConstructor;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.UUID;
 
+@AllArgsConstructor
 public class PagamentoUseCases implements PagamentoUseCasesPort {
-
     private final PedidoUseCasesPort pedidoUseCasesPort;
+    private final PagamentoQrcodeGatewayPort pagamentoQrcodeGatewayPort;
 
-    public PagamentoUseCases(PedidoUseCasesPort pedidoUseCasesPort) {
-        this.pedidoUseCasesPort = pedidoUseCasesPort;
-    }
     @Override
-    public String pagarPedido(UUID pedidoId) throws RecursoNaoEncontratoException {
+    public String atualizarStatusPagamento(UUID pedidoId, StatusPagamento statusPagamento) throws RecursoNaoEncontratoException {
         var pedido = this.pedidoUseCasesPort.buscarPedidoPorId(pedidoId);
-        if(pedido.getStatusPagamento() == StatusPagamento.PAGO ){
+        if(pedido.pagamentoRealizado()){
             return "O pagamento já foi realizado com sucesso.";
         }
 
-        pedido.setStatusPagamento(StatusPagamento.PAGO);
-        pedido.setStatusPedido(StatusPedido.RECEBIDO);
-        pedido.setDataRecebimento(LocalDateTime.now(ZoneId.of("UTC")));
-
+        pedido.atualizarStatusPedido(statusPagamento);
         this.pedidoUseCasesPort.salvarPedido(pedido);
+
         return "Pagamento finalizado com sucesso";
     }
 
     @Override
-    public String buscarStatusPagamentoPorPedidoId(UUID pedidoId) throws RecursoNaoEncontratoException{
-        var pedido = this.pedidoUseCasesPort.buscarPedidoPorId(pedidoId);
-        return pedido.getStatusPagamento().name();
-    }
+    public String gerarQrcode(UUID pedidoId) throws RecursoNaoEncontratoException {
+        Pedido pedido = pedidoUseCasesPort.buscarPedidoPorId(pedidoId);
+        if(pedido.pagamentoRealizado()){
+            return "O pagamento já foi realizado com sucesso.";
+        }
+        return pagamentoQrcodeGatewayPort.gerarQrcode(pedido);
+    };
+
+    @Override
+    public void validarPagamento(String pagamentoId) throws RecursoNaoEncontratoException {
+        var infoPagamento = pagamentoQrcodeGatewayPort.pagamentoComSucesso(pagamentoId);
+
+        if(infoPagamento.getFoiPago()) {
+            this.atualizarStatusPagamento(UUID.fromString(infoPagamento.getPedidoId()), StatusPagamento.PAGO);
+        }
+        this.atualizarStatusPagamento(UUID.fromString(infoPagamento.getPedidoId()), StatusPagamento.FRACASSADO);
+    };
 }

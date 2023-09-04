@@ -17,7 +17,7 @@ public interface ClienteUseCasesPort {
 
     void deletarCliente(UUID id);
 
-    Cliente criarNovoCliente(Cliente cliente) throws RecursoJaExisteException;
+    Cliente criarNovoCliente(String nome, String email, String cpf) throws RecursoJaExisteException;
 
     Cliente atualizarCliente(Optional<Cliente> clienteOpcional, UUID id) throws RecursoNaoEncontratoException;
 }

@@ -1,6 +1,8 @@
 package api.techchallenge.application.controllers;
 
+import api.techchallenge.application.presenters.requests.pagamento.GerarQrcodeRequest;
 import api.techchallenge.application.presenters.requests.pagamento.PagarPedidoRequest;
+import api.techchallenge.application.presenters.requests.pagamento.ProcessarPagamentoMPRequest;
 import api.techchallenge.domain.exception.RecursoNaoEncontratoException;
 import api.techchallenge.domain.useCases.PagamentoUseCases;
 import jakarta.validation.Valid;
@@ -19,11 +21,19 @@ public class PagamentoController {
 
     @PostMapping
     public String pagamento(@RequestBody @Valid PagarPedidoRequest pedidoRequest) throws RecursoNaoEncontratoException {
-        return this.pagamentoUseCases.pagarPedido(UUID.fromString(pedidoRequest.getPedidoId()));
+        return this.pagamentoUseCases.atualizarStatusPagamento(UUID.fromString(pedidoRequest.getPedidoId()), pedidoRequest.getStatusPagamento());
     }
 
-    @GetMapping("/{pedidoId}")
-    public String buscarStatusPagamento(@PathVariable UUID pedidoId) {
-        return this.pagamentoUseCases.buscarStatusPagamentoPorPedidoId(pedidoId);
+   @PostMapping("/mercado-pago/qrcode")
+   public String criarPagamento(@RequestBody @Valid GerarQrcodeRequest pedidoRequest) throws RecursoNaoEncontratoException {
+       return pagamentoUseCases.gerarQrcode(UUID.fromString(pedidoRequest.getPedidoId()));
+   }
+
+    @PostMapping("/mercado-pago/webhooks")
+    public String processarPagamento(@RequestBody ProcessarPagamentoMPRequest pedidoRequest) throws RecursoNaoEncontratoException {
+        if(pedidoRequest.getData() != null) {
+            pagamentoUseCases.validarPagamento(pedidoRequest.getData().getId());
+        }
+        return "ok";
     }
 }

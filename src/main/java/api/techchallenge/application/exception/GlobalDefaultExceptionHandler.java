@@ -1,5 +1,6 @@
 package api.techchallenge.application.exception;
 
+import api.techchallenge.domain.exception.AtributoInvalidoException;
 import api.techchallenge.domain.exception.RecursoJaExisteException;
 import api.techchallenge.domain.exception.RecursoNaoEncontratoException;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,16 @@ public class GlobalDefaultExceptionHandler extends ResponseEntityExceptionHandle
 
     @ExceptionHandler(RecursoJaExisteException.class)
     private ResponseEntity<ProblemDetail> handleResourceBadRequest(RecursoJaExisteException ex) {
+
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
+        problemDetail.setTitle(HttpStatus.BAD_REQUEST.getReasonPhrase());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(problemDetail);
+
+    }
+
+    @ExceptionHandler(AtributoInvalidoException.class)
+    private ResponseEntity<ProblemDetail> handleResourceBadRequest(AtributoInvalidoException ex) {
 
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
         problemDetail.setTitle(HttpStatus.BAD_REQUEST.getReasonPhrase());
