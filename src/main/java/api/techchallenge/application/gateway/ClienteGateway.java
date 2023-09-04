@@ -2,19 +2,19 @@ package api.techchallenge.application.gateway;
 
 
 import api.techchallenge.application.presenters.mappers.ClienteMapper;
+import api.techchallenge.domain.entities.Cliente;
 import api.techchallenge.domain.exception.RecursoNaoEncontratoException;
+import api.techchallenge.domain.ports.out.ClienteAdapterPort;
 import api.techchallenge.infrastructure.db.entity.ClienteEntity;
 import api.techchallenge.infrastructure.db.repositories.ClienteRepository;
-import api.techchallenge.domain.entities.Cliente;
-import api.techchallenge.domain.ports.out.ClienteAdapterPort;
-import org.springframework.transaction.annotation.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 import java.util.Optional;
+import java.util.UUID;
 
 import static java.text.MessageFormat.format;
 
@@ -48,7 +48,7 @@ public class ClienteGateway implements ClienteAdapterPort {
     @Transactional(readOnly = true)
     @Override
     public Optional<Cliente> buscarClientePorCpf(String cpf) throws RecursoNaoEncontratoException {
-        var clienteEntity = clienteRepository.findByCpf(cpf)
+        var clienteEntity = clienteRepository.findByCpf(String.valueOf(cpf))
                 .orElseThrow(() -> new RecursoNaoEncontratoException(format("Registro não encontrado com cpf {0}", cpf)));
 
         return Optional.of(clienteMapper.toDomain(clienteEntity));
@@ -57,7 +57,7 @@ public class ClienteGateway implements ClienteAdapterPort {
     @Transactional(readOnly = true)
     @Override
     public boolean clienteExiste(String cpf, String email) {
-        var clienteEntity = clienteRepository.findByCpf(cpf);
+        var clienteEntity = clienteRepository.findByCpf(String.valueOf(cpf));
 
         return clienteEntity.isPresent();
     }

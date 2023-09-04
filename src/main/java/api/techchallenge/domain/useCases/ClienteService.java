@@ -5,7 +5,8 @@ import api.techchallenge.domain.exception.RecursoJaExisteException;
 import api.techchallenge.domain.exception.RecursoNaoEncontratoException;
 import api.techchallenge.domain.ports.in.ClienteServicePort;
 import api.techchallenge.domain.ports.out.ClienteAdapterPort;
-
+import api.techchallenge.domain.valueObjects.CPF;
+import api.techchallenge.domain.valueObjects.Email;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -45,12 +46,19 @@ public class ClienteService implements ClienteServicePort {
     }
 
     @Override
-    public Cliente criarNovoCliente(Cliente cliente) throws RecursoJaExisteException {
-        var optionalCliente = this.clienteAdapterPort.clienteExiste(cliente.getCpf(), cliente.getEmail());
+    public Cliente criarNovoCliente(String nome, String email, String cpf) throws RecursoJaExisteException {
+        var emailValido = new Email(email);
+        var cpfValido = new CPF(cpf);
+        var optionalCliente = this.clienteAdapterPort.clienteExiste(cpf, email);
 
         if(optionalCliente) {
             throw  new RecursoJaExisteException("Email ou Cpf já possui cadastro");
         }
+
+        var cliente = new Cliente();
+        cliente.setNome(nome);
+        cliente.setCpf(cpfValido);
+        cliente.setEmail(emailValido);
         cliente.setDataCriacao(LocalDateTime.now(ZoneId.of("UTC")));
         cliente.setDataAtualizacao(LocalDateTime.now(ZoneId.of("UTC")));
 
