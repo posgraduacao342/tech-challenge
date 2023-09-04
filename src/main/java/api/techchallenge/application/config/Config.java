@@ -9,26 +9,26 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class Config {
     @Bean
-    public ClienteService clienteService(ClienteGateway clienteGateway) {
-        return new ClienteService(clienteGateway);
+    public ClienteUseCases clienteUseCasesConfig(ClienteGateway clienteGateway) {
+        return new ClienteUseCases(clienteGateway);
     }
 
     @Bean
-    public ItemService itemService(ItemGateway itemGateway) { return new ItemService(itemGateway); }
+    public ItemUseCases itemUseCasesConfig(ItemGateway itemGateway) { return new ItemUseCases(itemGateway); }
 
     @Bean
-    public PedidoService pedidoService(PedidoGateway pedidoGateway) {
-        return new PedidoService(pedidoGateway);
+    public PedidoUseCases pedidoUseCasesConfig(PedidoGateway pedidoGateway) {
+        return new PedidoUseCases(pedidoGateway);
     }
 
     @Bean
-    public ProdutoService produtoService(ProdutoGateway produtoGateway, ProdutoMapper produtoMapper) {
-        return new ProdutoService(produtoGateway, produtoMapper);
+    public ProdutoUseCases produtoUseCasesConfig(ProdutoGateway produtoGateway, ProdutoMapper produtoMapper) {
+        return new ProdutoUseCases(produtoGateway, produtoMapper);
     }
 
     @Bean
-    public PagamentoService pagamentoService(PedidoGateway pedidoGateway, PagamentoQrcodeGateway pagamentoQrcodeGateway) {
-        var pedidoService = new PedidoService(pedidoGateway);
-        return new PagamentoService(pedidoService, pagamentoQrcodeGateway);
+    public PagamentoUseCases pagamentoUseCasesConfig(PedidoGateway pedidoGateway, PagamentoQrcodeGateway pagamentoQrcodeGateway) {
+        var pedidoService = new PedidoUseCases(pedidoGateway);
+        return new PagamentoUseCases(pedidoService, pagamentoQrcodeGateway);
     }
 }

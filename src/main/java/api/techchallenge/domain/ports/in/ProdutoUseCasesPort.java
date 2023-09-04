@@ -8,7 +8,7 @@ import api.techchallenge.domain.exception.RecursoNaoEncontratoException;
 import java.util.List;
 import java.util.UUID;
 
-public interface ProdutoServicePort {
+public interface ProdutoUseCasesPort {
     
     List<Produto> buscarProdutos();
 

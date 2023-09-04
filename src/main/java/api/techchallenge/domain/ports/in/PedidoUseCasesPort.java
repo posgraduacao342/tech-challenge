@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface PedidoServicePort {
+public interface PedidoUseCasesPort {
     List<Pedido> buscarPedidos(Optional<PedidoSortingOptions> sortingProperty, Optional<Sort.Direction> direction);
 
     List<Pedido> buscarFilaDePedidos();

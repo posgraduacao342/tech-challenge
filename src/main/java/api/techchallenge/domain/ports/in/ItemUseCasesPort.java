@@ -5,7 +5,7 @@ import api.techchallenge.domain.entities.Item;
 import java.util.List;
 import java.util.UUID;
 
-public interface ItemServicePort {
+public interface ItemUseCasesPort {
     List<Item> buscarItensPorPedido(UUID pedidoId);
     Item buscarItem(UUID itemId);
     List<Item> atualizarObservacao(List<Item> itens);

@@ -1,7 +1,7 @@
 package api.techchallenge.domain.useCases;
 
 import api.techchallenge.domain.entities.Item;
-import api.techchallenge.domain.ports.in.ItemServicePort;
+import api.techchallenge.domain.ports.in.ItemUseCasesPort;
 import api.techchallenge.domain.ports.out.ItemAdapterPort;
 import lombok.AllArgsConstructor;
 
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
-public class ItemService implements ItemServicePort {
+public class ItemUseCases implements ItemUseCasesPort {
     private final ItemAdapterPort itemAdapter;
 
     @Override
