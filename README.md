@@ -49,6 +49,12 @@ Abra o navegador e cole a url: http://localhost:8080/swagger-ui/index.html
 - Acesse o enpoint de pedidos GET - /pedidos/{pedidoId} e envia a request.
 
 ## Mercado pago
+### Pré requisitos
+- Instalar o ngrok nesse [site](https://ngrok.com/download).
+- Executar o ngrok `./ngrok http 8080`
+- Pegar a url gerada(Ex:  https://92b6-45-230-103-240.ngrok-free.app) e adicione na linha 67 do arquivo ./pipeline/dev/application/deployment.yaml 
+- Inicie a aplicação
+
 ### Fluxo de pagamento
 - Execute o comando `kubectl port-forward svc/tech-challenge-service 8080:80`
 - Acesse o mercado pago com essa conta de teste:
