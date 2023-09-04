@@ -31,7 +31,7 @@ public class ClienteGateway implements ClienteAdapterPort {
         List<Cliente> clientes = new ArrayList<Cliente>();
 
         for (ClienteEntity clienteEntity : clientesEntity) {
-            clientes.add(clienteMapper.toDomain(clienteEntity));
+            clientes.add(clienteMapper.clienteEntityToCliente(clienteEntity));
         }
         return clientes;
     }
@@ -42,7 +42,7 @@ public class ClienteGateway implements ClienteAdapterPort {
         var clienteEntity = clienteRepository.findById(id)
                 .orElseThrow(() -> new RecursoNaoEncontratoException(format("Registro não encontrado com código {0}", id)));
 
-        return Optional.of(clienteMapper.toDomain(clienteEntity));
+        return Optional.of(clienteMapper.clienteEntityToCliente(clienteEntity));
     }
 
     @Transactional(readOnly = true)
@@ -51,7 +51,7 @@ public class ClienteGateway implements ClienteAdapterPort {
         var clienteEntity = clienteRepository.findByCpf(String.valueOf(cpf))
                 .orElseThrow(() -> new RecursoNaoEncontratoException(format("Registro não encontrado com cpf {0}", cpf)));
 
-        return Optional.of(clienteMapper.toDomain(clienteEntity));
+        return Optional.of(clienteMapper.clienteEntityToCliente(clienteEntity));
     }
 
     @Transactional(readOnly = true)
