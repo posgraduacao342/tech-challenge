@@ -9,6 +9,9 @@ import api.techchallenge.infrastructure.db.entity.ClienteEntity;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class ClienteMapper {
     public Cliente toDomain(CriarClienteRequest clienteRequest) {
@@ -65,4 +68,15 @@ public class ClienteMapper {
         response.setPedidos(cliente.getPedidos());
         return response;
     }
+
+    public List<CriarClienteResponse> listClienteToListCriarClienteResponse(List<Cliente> clienteList) {
+
+        var response = new ArrayList<CriarClienteResponse>();
+        clienteList.forEach(item -> {
+            response.add(clienteToCriarClienteResponse(item));
+        });
+        return response;
+    }
+
+
 }
