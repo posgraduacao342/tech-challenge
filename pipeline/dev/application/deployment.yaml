@@ -62,8 +62,8 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: tech-challenge-secret
-                  key: mp-token
-            - name: url-webhook
+                  key: mp.token
+            - name: url.pg.webhook
               value: "https://53ea-45-230-103-240.ngrok-free.app/pagamentos/mercado-pago/webhooks"
 
   replicas: 2
