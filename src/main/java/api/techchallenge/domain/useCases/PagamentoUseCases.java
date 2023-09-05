@@ -35,7 +35,7 @@ public class PagamentoUseCases implements PagamentoUseCasesPort {
             return "O pagamento já foi realizado com sucesso.";
         }
         return pagamentoQrcodeGatewayPort.gerarQrcode(pedido);
-    };
+    }
 
     @Override
     public void validarPagamento(String pagamentoId) throws RecursoNaoEncontratoException {
@@ -45,5 +45,11 @@ public class PagamentoUseCases implements PagamentoUseCasesPort {
             this.atualizarStatusPagamento(UUID.fromString(infoPagamento.getPedidoId()), StatusPagamento.PAGO);
         }
         this.atualizarStatusPagamento(UUID.fromString(infoPagamento.getPedidoId()), StatusPagamento.FRACASSADO);
-    };
+    }
+
+    @Override
+    public String buscarStatusPagamentoPorPedidoId(UUID pedidoId) throws RecursoNaoEncontratoException{
+        var pedido = this.pedidoUseCasesPort.buscarPedidoPorId(pedidoId);
+        return pedido.getStatusPagamento().name();
+    }
 }

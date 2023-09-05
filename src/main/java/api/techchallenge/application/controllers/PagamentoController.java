@@ -36,4 +36,9 @@ public class PagamentoController {
         }
         return "ok";
     }
+
+    @GetMapping("/{pedidoId}/status")
+    public String buscarStatusPagamento(@PathVariable UUID pedidoId) {
+        return this.pagamentoUseCases.buscarStatusPagamentoPorPedidoId(pedidoId);
+    }
 }

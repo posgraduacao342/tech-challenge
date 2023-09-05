@@ -9,4 +9,5 @@ public interface PagamentoUseCasesPort {
     String atualizarStatusPagamento(UUID pedidoId, StatusPagamento statusPagamento) throws RecursoNaoEncontratoException;
     String gerarQrcode(UUID pedidoId) throws RecursoNaoEncontratoException;
     void validarPagamento(String pedidoId) throws RecursoNaoEncontratoException;
+    String buscarStatusPagamentoPorPedidoId(UUID pedidoId) throws RecursoNaoEncontratoException;
 }
