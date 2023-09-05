@@ -15,6 +15,17 @@ cd docker
  docker-compose up
 ```
 
+# Executar a aplicação pelo kubernetes
+
+## Minikube
+- minikube start
+- minikube stop
+- minikube status
+
+## Executar os comandos para inicializar os pods
+- kubectl apply -f dev/application
+- kubectl apply -f dev/postgress
+
 # Testar a aplicação
 
 **OBS: Os endpoints que não possuem ação do cliente precisam de autenticação, use o usuário padrão para mandar as requests:**
