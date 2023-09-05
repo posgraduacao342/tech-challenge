@@ -22,9 +22,15 @@ cd docker
 - minikube stop
 - minikube status
 
-## Executar os comandos para inicializar os pods
-- kubectl apply -f dev/application
-- kubectl apply -f dev/postgress
+## Executar os comandos para inicializar os pods respectivamente
+- kubectl apply -f pipeline/dev/postgres
+- kubectl apply -f pipeline/dev/application   
+
+
+## Execute o comando abaixo para abrir a url que tem conexão com o pod
+- minikube service tech-challenge-service
+
+- Swagger: http://[Ip]:30001/swagger-ui/index.html
 
 # Testar a aplicação
 
@@ -34,7 +40,7 @@ cd docker
 ![autenticacao](./imagens/autenticacao.png)
 
 ## Acesse o swagger
-Abra o navegador e cole a url: http://localhost:8080/swagger-ui/index.html
+Abra o navegador e cole a url: http://[Ip]:30001/swagger-ui/index.html
 
 ## Cadastro
 
@@ -63,8 +69,11 @@ Abra o navegador e cole a url: http://localhost:8080/swagger-ui/index.html
 ### Pré requisitos
 - Instalar o ngrok nesse [site](https://ngrok.com/download).
 - Executar o ngrok `./ngrok http 8080`
-- Pegar a url gerada(Ex:  https://92b6-45-230-103-240.ngrok-free.app) e adicione na linha 67 do arquivo ./pipeline/dev/application/deployment.yaml 
-- Inicie a aplicação
+- Pegar a url gerada(Ex: https://[urlNgrok]/pagamentos/mercado-pago/webhooks) e adicione na linha 54 do arquivo ./pipeline/dev/application/deployment.yaml 
+- De um apply nas novas configurações do deployment:
+```
+ kubectl apply -f pipeline/dev/application/deployment.yaml
+```
 
 ### Fluxo de pagamento
 - Execute o comando `kubectl port-forward svc/tech-challenge-service 8080:80`
@@ -78,7 +87,8 @@ senha: T5QXrnlKgJ
 - Pegue o QR Code em formato de texto que será retornado e cole nesse [site](https://www.qrcode-monkey.com/pt/?utm_source=google_c&utm_medium=cpc&utm_campaign=&utm_content=&utm_term=qrcode%20monkey_e&gclid=CjwKCAjw3dCnBhBCEiwAVvLcuzrWOjjWvrrH2V7GILt-d04D3pUgkeBTYBYvMzAmLMmNs2ZjzphfwBoC-rEQAvD_BwE#text) aperte o botão "Criar QR Code"
 
 #### Fluxo de pagamento com sucesso
-- escaneie o QR Code e efetue o pagamento saldo da conta
+- Escaneie o QR Code e efetue o pagamento saldo da conta.
 
 #### Fluxo de pagamento com erro
-- escaneie o QR Code e efetue o pagamento o cartão de crédoto cadastrado.
+- Escaneie o QR Code e efetue o pagamento com o cartão de crédito cadastrado.
+- Código de segurança é 123.

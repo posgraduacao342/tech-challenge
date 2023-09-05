@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: tech-challenge-api
-          image: 1811183/tech-challenge:1.0.2
+          image: 1811183/tech-challenge:1.0.3
           ports:
             - containerPort: 8080
           livenessProbe:
@@ -51,7 +51,7 @@ spec:
                   name: tech-challenge-secret
                   key: mp.token
             - name: url.pg.webhook
-              value: "https://53ea-45-230-103-240.ngrok-free.app/pagamentos/mercado-pago/webhooks"
+              value: "https://f0d6-45-230-103-240.ngrok-free.app/pagamentos/mercado-pago/webhooks"
 
   replicas: 2
   selector:
