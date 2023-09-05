@@ -1,7 +1,6 @@
 package api.techchallenge.application.presenters.mappers;
 
 import api.techchallenge.application.presenters.requests.pedido.CriarPedidoRequest;
-import api.techchallenge.application.presenters.responses.cliente.ClienteResponse;
 import api.techchallenge.application.presenters.responses.item.ItemResponse;
 import api.techchallenge.application.presenters.responses.pedido.PedidoResponse;
 import api.techchallenge.domain.entities.Cliente;
@@ -16,6 +15,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 @AllArgsConstructor
 public class PedidoMapper {
@@ -24,13 +26,13 @@ public class PedidoMapper {
     public Pedido toDomain(CriarPedidoRequest pedidoRequest) {
         var pedido = new Pedido();
 
-        if (pedidoRequest.getIdCliente() != null){
+        if (pedidoRequest.getIdCliente() != null) {
             var cliente = new Cliente();
             cliente.setId(pedidoRequest.getIdCliente());
             pedido.setCliente(cliente);
         }
 
-        pedidoRequest.getItens().forEach(itensRequest ->{
+        pedidoRequest.getItens().forEach(itensRequest -> {
             var item = new Item();
             var produto = new Produto();
             produto.setId(itensRequest.getProdutoId());
@@ -46,14 +48,14 @@ public class PedidoMapper {
 
     public Pedido toDomain(PedidoEntity pedidoEntity) {
         Pedido pedido = genericMapper.toTransform(pedidoEntity, Pedido.class);
-        pedidoEntity.getItens().forEach(itemEntity ->{
+        pedidoEntity.getItens().forEach(itemEntity -> {
             var item = genericMapper.toTransform(itemEntity, Item.class);
             var produto = genericMapper.toTransform(itemEntity.getProduto(), Produto.class);
             item.setProduto(produto);
             pedido.adicionarItem(item);
         });
 
-        if (pedidoEntity.getCliente() != null){
+        if (pedidoEntity.getCliente() != null) {
             var cliente = genericMapper.toTransform(pedidoEntity.getCliente(), Cliente.class);
             pedido.setCliente(cliente);
         }
@@ -64,7 +66,7 @@ public class PedidoMapper {
     public PedidoEntity toEntity(Pedido pedido) {
         var pedidoEntity = new PedidoEntity();
 
-        if (pedido.getCliente() != null){
+        if (pedido.getCliente() != null) {
             var cliente = new ClienteEntity();
             pedidoEntity.setCliente(genericMapper.toTransform(pedido.getCliente(), cliente.getClass()));
         }
@@ -87,21 +89,28 @@ public class PedidoMapper {
         return pedidoEntity;
     }
 
-    public PedidoResponse toResponse(Pedido pedido){
+    public PedidoResponse toResponse(Pedido pedido) {
         var pedidoResponse = new PedidoResponse();
 
-        pedido.getItens().forEach(item ->{
+        pedido.getItens().forEach(item -> {
             var itemResponse = new ItemResponse();
             BeanUtils.copyProperties(item, itemResponse);
             pedidoResponse.adicionarItem(itemResponse);
         });
 
-        if (pedido.getCliente() != null){
-            var cliente = genericMapper.toTransform(pedido.getCliente(), ClienteResponse.class);
-            pedidoResponse.setCliente(cliente);
+        if (pedido.getCliente() != null) {
+            pedidoResponse.setClienteId(pedido.getCliente().getId());
         }
 
         BeanUtils.copyProperties(pedido, pedidoResponse);
         return pedidoResponse;
+    }
+
+    public List<PedidoResponse> toResponse(List<Pedido> pedidoList) {
+        var response = new ArrayList<PedidoResponse>();
+        pedidoList.forEach(pedido -> {
+            response.add(toResponse(pedido));
+        });
+        return response;
     }
 }

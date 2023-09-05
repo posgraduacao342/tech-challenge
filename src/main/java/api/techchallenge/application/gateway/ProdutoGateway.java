@@ -31,7 +31,7 @@ public class ProdutoGateway implements ProdutoAdapterPort {
         var produtosEntity = produtoRepository.findAll();
         List<Produto> produtos = new ArrayList<>();
 
-        for (ProdutoEntity produtoEntity: produtosEntity) {
+        for (ProdutoEntity produtoEntity : produtosEntity) {
             produtos.add(produtoMapper.toDomain(produtoEntity));
         }
 
@@ -47,9 +47,15 @@ public class ProdutoGateway implements ProdutoAdapterPort {
         return Optional.of(produtoMapper.toDomain(produtoEntity));
     }
 
+    @Override
+    public List<Produto> buscarProdutoPorIds(List<UUID> ids) {
+        var produtoEntity = produtoRepository.findByIdIn(ids);
+        return produtoMapper.toDomain(produtoEntity);
+    }
+
     @Transactional(readOnly = true)
     @Override
-    public List<Produto> buscarProdutosPorCategoria(Categoria categoria){
+    public List<Produto> buscarProdutosPorCategoria(Categoria categoria) {
         var produtoEntityList = produtoRepository.findByCategoria(categoria);
 
         return produtoMapper.toDomainList(produtoEntityList);

@@ -13,6 +13,8 @@ public interface ProdutoAdapterPort {
 
     Optional<Produto> buscarProdutoPorId(UUID id) throws RecursoNaoEncontratoException;
 
+    List<Produto> buscarProdutoPorIds(List<UUID> ids);
+
     List<Produto> buscarProdutosPorCategoria(Categoria categoria);
 
     void deletarProduto(UUID id);
