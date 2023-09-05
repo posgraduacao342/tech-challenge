@@ -14,11 +14,13 @@ public class Config {
     }
 
     @Bean
-    public ItemUseCases itemUseCasesConfig(ItemGateway itemGateway) { return new ItemUseCases(itemGateway); }
+    public ItemUseCases itemUseCasesConfig(ItemGateway itemGateway) {
+        return new ItemUseCases(itemGateway);
+    }
 
     @Bean
-    public PedidoUseCases pedidoUseCasesConfig(PedidoGateway pedidoGateway) {
-        return new PedidoUseCases(pedidoGateway);
+    public PedidoUseCases pedidoUseCasesConfig(PedidoGateway pedidoGateway, ProdutoGateway produtoGateway) {
+        return new PedidoUseCases(pedidoGateway, produtoGateway);
     }
 
     @Bean
@@ -27,8 +29,8 @@ public class Config {
     }
 
     @Bean
-    public PagamentoUseCases pagamentoUseCasesConfig(PedidoGateway pedidoGateway, PagamentoQrcodeGateway pagamentoQrcodeGateway) {
-        var pedidoService = new PedidoUseCases(pedidoGateway);
+    public PagamentoUseCases pagamentoUseCasesConfig(PedidoGateway pedidoGateway, PagamentoQrcodeGateway pagamentoQrcodeGateway, ProdutoGateway produtoGateway) {
+        var pedidoService = new PedidoUseCases(pedidoGateway, produtoGateway);
         return new PagamentoUseCases(pedidoService, pagamentoQrcodeGateway);
     }
 }

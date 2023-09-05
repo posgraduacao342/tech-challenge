@@ -25,20 +25,28 @@ public class Pedido extends BaseEntity {
         this.itens = new ArrayList<>();
     }
 
-    public void adicionarItem(Item item){
+    public void adicionarItem(Item item) {
         var listaItem = this.getItens();
         listaItem.add(item);
     }
 
-    public boolean pagamentoRealizado(){
+    public boolean pagamentoRealizado() {
         return this.getStatusPagamento() == StatusPagamento.PAGO;
     }
 
-    public void atualizarStatusPedido(StatusPagamento statusPagamento){
-        if(statusPagamento.equals(StatusPagamento.PAGO)) {
+    public void atualizarStatusPedido(StatusPagamento statusPagamento) {
+        if (statusPagamento.equals(StatusPagamento.PAGO)) {
             this.setStatusPedido(StatusPedido.RECEBIDO);
         }
         this.setStatusPagamento(statusPagamento);
         this.setDataRecebimento(LocalDateTime.now(ZoneId.of("UTC")));
+    }
+
+    public boolean validarPreco() {
+        BigDecimal totalItens = BigDecimal.ZERO;
+        for (Item item : itens) {
+            totalItens = totalItens.add(item.calcularTotal());
+        }
+        return preco.compareTo(totalItens) == 0;
     }
 }

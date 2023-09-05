@@ -14,32 +14,42 @@ import java.util.List;
 
 @Component
 public class ProdutoMapper {
-    public Produto toDomain(ProdutoEntity produtoEntity){
+    public Produto toDomain(ProdutoEntity produtoEntity) {
         var produto = new Produto();
         BeanUtils.copyProperties(produtoEntity, produto);
         return produto;
     }
-    public Produto toDomainWithId(ProdutoEntity produtoEntity){
+
+    public Produto toDomainWithId(ProdutoEntity produtoEntity) {
         var produto = new Produto();
         BeanUtils.copyProperties(produtoEntity, produto);
         produto.setId(produtoEntity.getId());
         return produto;
     }
-    public List<Produto> toDomainList(List<ProdutoEntity> produtoEntityList){
+
+    public List<Produto> toDomainList(List<ProdutoEntity> produtoEntityList) {
         var produtos = new ArrayList<Produto>();
-        for (ProdutoEntity produtoEntity: produtoEntityList) {
+        for (ProdutoEntity produtoEntity : produtoEntityList) {
             produtos.add(toDomain(produtoEntity));
         }
         return produtos;
     }
 
-    public Produto toDomain(CriarProdutoRequest request){
+    public Produto toDomain(CriarProdutoRequest request) {
         var produto = new Produto();
         BeanUtils.copyProperties(request, produto);
         return produto;
     }
 
-    public Produto toDomain(AtualizarProdutoRequest request, Produto produto){
+    public List<Produto> toDomain(List<ProdutoEntity> produtoEntities) {
+        var produtos = new ArrayList<Produto>();
+        produtoEntities.forEach(produtoEntity -> {
+            produtos.add(toDomain(produtoEntity));
+        });
+        return produtos;
+    }
+
+    public Produto toDomain(AtualizarProdutoRequest request, Produto produto) {
         if (request.nome != null) {
             produto.setNome(request.nome);
         }
@@ -60,7 +70,7 @@ public class ProdutoMapper {
         return produto;
     }
 
-    public ProdutoEntity toEntity(Produto produto){
+    public ProdutoEntity toEntity(Produto produto) {
         var produtoEntity = new ProdutoEntity();
         BeanUtils.copyProperties(produto, produtoEntity);
         produtoEntity.setDataCriacao(LocalDateTime.now(ZoneId.of("UTC")));
