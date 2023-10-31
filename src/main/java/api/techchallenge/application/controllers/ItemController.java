@@ -1,10 +1,10 @@
 package api.techchallenge.application.controllers;
 
-import api.techchallenge.application.mappers.GenericMapper;
-import api.techchallenge.application.requests.item.AtualizarObservacaoItemRequest;
-import api.techchallenge.application.responses.item.ItemResponse;
-import api.techchallenge.domain.core.domain.Item;
-import api.techchallenge.domain.ports.in.ItemServicePort;
+import api.techchallenge.application.presenters.mappers.GenericMapper;
+import api.techchallenge.application.presenters.requests.item.AtualizarObservacaoItemRequest;
+import api.techchallenge.application.presenters.responses.item.ItemResponse;
+import api.techchallenge.domain.entities.Item;
+import api.techchallenge.domain.ports.in.ItemUseCasesPort;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,24 +18,24 @@ import java.util.UUID;
 @RequestMapping("/itens")
 @AllArgsConstructor
 public class ItemController {
-    private final ItemServicePort itemService;
+    private final ItemUseCasesPort itemUseCases;
     private final GenericMapper itemGenericMapper;
 
     @GetMapping("/porPedido/{pedidoId}")
     public ResponseEntity<List<Item>> buscarItensPorPedido(@PathVariable UUID pedidoId) {
-        List<Item> items = itemService.buscarItensPorPedido(pedidoId);
+        List<Item> items = itemUseCases.buscarItensPorPedido(pedidoId);
         return new ResponseEntity<>(items, HttpStatus.OK);
     }
 
     @GetMapping("/{itemId}")
     public ResponseEntity<Item> buscarItem(@PathVariable UUID itemId) {
-        Item item = itemService.buscarItem(itemId);
+        Item item = itemUseCases.buscarItem(itemId);
         return new ResponseEntity<>(item, HttpStatus.OK);
     }
 
     @PatchMapping(value = "/observacao")
     public List<ItemResponse> atualizarObservacao(@RequestBody @Valid List<AtualizarObservacaoItemRequest> itemRequestPatch){
         var itens = itemGenericMapper.toTransformList(itemRequestPatch, Item.class);
-        return itemGenericMapper.toTransformList(itemService.atualizarObservacao(itens), ItemResponse.class);
+        return itemGenericMapper.toTransformList(itemUseCases.atualizarObservacao(itens), ItemResponse.class);
     }
 }

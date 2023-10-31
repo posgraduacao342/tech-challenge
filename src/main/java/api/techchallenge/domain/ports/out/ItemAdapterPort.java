@@ -1,7 +1,7 @@
 package api.techchallenge.domain.ports.out;
 
-import api.techchallenge.application.requests.item.AtualizarItemRequest;
-import api.techchallenge.domain.core.domain.Item;
+import api.techchallenge.application.presenters.requests.item.AtualizarItemRequest;
+import api.techchallenge.domain.entities.Item;
 
 import java.util.List;
 import java.util.UUID;

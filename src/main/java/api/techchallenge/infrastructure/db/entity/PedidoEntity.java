@@ -1,7 +1,7 @@
 package api.techchallenge.infrastructure.db.entity;
 
-import api.techchallenge.domain.core.enums.StatusPagamento;
-import api.techchallenge.domain.core.enums.StatusPedido;
+import api.techchallenge.domain.enums.StatusPagamento;
+import api.techchallenge.domain.enums.StatusPedido;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -10,7 +10,6 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
