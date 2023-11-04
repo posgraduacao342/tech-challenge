@@ -21,14 +21,14 @@ jobs:
         distribution: 'temurin'
         cache: maven
         
-    - name: Build with Maven
-      env:
-        DATASOURCE_URL: ${{ secrets.DATASOURCE_URL }}
-        DATASOURCE_USERNAME: ${{ secrets.DATASOURCE_USERNAME }}
-        DATASOURCE_PASSWORD: ${{ secrets.DATASOURCE_PASSWORD }}
-        MP_WEBHOOK: ${{ secrets.MP_WEBHOOK }}
-        MP_TOKEN: ${{ secrets.MP_TOKEN }}
-      run: mvn -B package --file pom.xml
+    # - name: Build with Maven
+    #   env:
+    #     DATASOURCE_URL: ${{ secrets.DATASOURCE_URL }}
+    #     DATASOURCE_USERNAME: ${{ secrets.DATASOURCE_USERNAME }}
+    #     DATASOURCE_PASSWORD: ${{ secrets.DATASOURCE_PASSWORD }}
+    #     MP_WEBHOOK: ${{ secrets.MP_WEBHOOK }}
+    #     MP_TOKEN: ${{ secrets.MP_TOKEN }}
+    #   run: mvn -B package --file pom.xml
 
     - name: Cache SonarCloud packages
       uses: actions/cache@v3
@@ -43,9 +43,14 @@ jobs:
         path: ~/.m2
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
         restore-keys: ${{ runner.os }}-m2
-        
+
     - name: Build and analyze
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=posgraduacao342_tech-challenge
+        DATASOURCE_URL: ${{ secrets.DATASOURCE_URL }}
+        DATASOURCE_USERNAME: ${{ secrets.DATASOURCE_USERNAME }}
+        DATASOURCE_PASSWORD: ${{ secrets.DATASOURCE_PASSWORD }}
+        MP_WEBHOOK: ${{ secrets.MP_WEBHOOK }}
+        MP_TOKEN: ${{ secrets.MP_TOKEN }}
+      run: mvn -B package --file pom.xml && mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=posgraduacao342_tech-challenge
