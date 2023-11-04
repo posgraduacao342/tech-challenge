@@ -62,13 +62,31 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
+        
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+
+    - name: Create ECR if not exists
+      run: |
+        aws ecr create-repository --repository-name tech-challenge-ecr || exit 0
+
+    - name: Build, tag, and push image to Amazon ECR
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: fedhr-repo-backend
+        IMAGE_TAG: ${{ github.sha }}
+      run: |
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
+        docker push -a $ECR_REGISTRY/$ECR_REPOSITORY
 
     - name: Configure kubectl
       # if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: |
-        aws eks --region us-east-1 update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }}
+        aws eks update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }} --region us-east-1
 
     - name: Deploy to EKS
       # if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: |
-        kubectl apply -f pipeline/dev/application/deployment.yaml
+        kubectl apply -f dev/application
+        kubectl apply -f dev/postgress
