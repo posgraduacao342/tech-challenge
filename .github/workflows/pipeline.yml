@@ -58,9 +58,9 @@ jobs:
     - name: Configure kubectl
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: |
-        aws eks --region us-east-1 update-kubeconfig --name ${{ env.EKS_CLUSTER_NAME }}
+        aws eks --region us-east-1 update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }}
 
     - name: Deploy to EKS
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: |
-        kubectl apply -f your-java-app-deployment.yaml
+        kubectl apply -f pipeline/dev/application/deployment.yaml
