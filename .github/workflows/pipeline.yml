@@ -83,7 +83,7 @@ jobs:
     - name: Configure kubectl
       # if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: |
-        aws eks update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }} --region us-east-1
+        aws eks update-kubeconfig --name tech-challenge-cluster --region us-east-1
 
 
     - name: Get available contexts
