@@ -62,7 +62,7 @@ jobs:
 
   deploy:
     # if: github.event_name == 'push'
-    needs: build_and_test
+    needs: sonar_analysis
     runs-on: ubuntu-latest
     steps:
     - name: Configure AWS credentials
