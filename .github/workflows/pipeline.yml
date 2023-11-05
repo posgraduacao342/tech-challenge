@@ -3,12 +3,12 @@ name: Java CI with Maven
 on:
   workflow_dispatch:
   push:
-    branches: [ "main", "develop" ]
+    branches: main
   pull_request:
-    branches: [ "main", "develop" ]
+    branches: main
 
 jobs:
-  build:
+  build_and_test:
 
     runs-on: ubuntu-latest
 
@@ -31,31 +31,40 @@ jobs:
         MP_TOKEN: ${{ secrets.MP_TOKEN }}
       run: mvn -B package --file pom.xml
 
-    # - name: Cache SonarCloud packages
-    #   uses: actions/cache@v3
-    #   with:
-    #     path: ~/.sonar/cache
-    #     key: ${{ runner.os }}-sonar
-    #     restore-keys: ${{ runner.os }}-sonar
+  sonar_analysis:
+    needs: build_and_test
+    runs-on: ubuntu-latest
+    steps:
+    - name: Cache SonarCloud packages
+      uses: actions/cache@v3
+      with:
+        path: ~/.sonar/cache
+        key: ${{ runner.os }}-sonar
+        restore-keys: ${{ runner.os }}-sonar
 
-    # - name: Cache Maven packages
-    #   uses: actions/cache@v3
-    #   with:
-    #     path: ~/.m2
-    #     key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-    #     restore-keys: ${{ runner.os }}-m2
+    - name: Cache Maven packages
+      uses: actions/cache@v3
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+        restore-keys: ${{ runner.os }}-m2
 
-    # - name: Build and analyze
-    #   env:
-    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-    #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-    #     DATASOURCE_URL: ${{ secrets.DATASOURCE_URL }}
-    #     DATASOURCE_USERNAME: ${{ secrets.DATASOURCE_USERNAME }}
-    #     DATASOURCE_PASSWORD: ${{ secrets.DATASOURCE_PASSWORD }}
-    #     MP_WEBHOOK: ${{ secrets.MP_WEBHOOK }}
-    #     MP_TOKEN: ${{ secrets.MP_TOKEN }}
-    #   run: mvn -B package --file pom.xml && mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=posgraduacao342_tech-challenge
+    - name: Build and analyze
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        DATASOURCE_URL: ${{ secrets.DATASOURCE_URL }}
+        DATASOURCE_USERNAME: ${{ secrets.DATASOURCE_USERNAME }}
+        DATASOURCE_PASSWORD: ${{ secrets.DATASOURCE_PASSWORD }}
+        MP_WEBHOOK: ${{ secrets.MP_WEBHOOK }}
+        MP_TOKEN: ${{ secrets.MP_TOKEN }}
+      run: mvn -B package --file pom.xml && mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=posgraduacao342_tech-challenge
 
+  deploy:
+    # if: github.event_name == 'push'
+    needs: build_and_test
+    runs-on: ubuntu-latest
+    steps:
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -81,18 +90,10 @@ jobs:
         docker push -a $ECR_REGISTRY/$ECR_REPOSITORY
 
     - name: Configure kubectl
-      # if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: |
         aws eks update-kubeconfig --name tech-challenge-cluster --region us-east-1
-
-
-    - name: Get available contexts
-      run: kubectl config get-contexts
-    - name: Get current context
-      run: kubectl config current-context
       
     - name: Deploy to EKS
-      # if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: |
         kubectl apply -f dev/application
-        kubectl apply -f dev/postgress
+        kubectl apply -f dev/postgres
