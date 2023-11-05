@@ -85,6 +85,12 @@ jobs:
       run: |
         aws eks update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }} --region us-east-1
 
+
+    - name: Get available contexts
+      run: kubectl config get-contexts
+    - name: Get current context
+      run: kubectl config current-context
+      
     - name: Deploy to EKS
       # if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: |
