@@ -77,8 +77,8 @@ jobs:
         ECR_REPOSITORY: tech-challenge-ecr
         IMAGE_TAG: ${{ github.sha }}
       run: |
-        docker build -t docker/$ECR_REGISTRY/$ECR_REPOSITORY:latest -f docker/Dockerfile .
-        docker push -a docker/$ECR_REGISTRY/$ECR_REPOSITORY
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:latest -f docker/Dockerfile .
+        docker push -a $ECR_REGISTRY/$ECR_REPOSITORY
 
     - name: Configure kubectl
       # if: github.ref == 'refs/heads/main' && github.event_name == 'push'
