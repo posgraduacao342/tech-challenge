@@ -1,13 +1,14 @@
 name: Java CI with Maven
 
 on:
+  workflow_dispatch:
   push:
-    branches: [ "main", "develop" ]
+    branches: [main]
   pull_request:
-    branches: [ "main", "develop" ]
+    branches: [main]
 
 jobs:
-  build:
+  build_and_analysis:
 
     runs-on: ubuntu-latest
 
@@ -46,7 +47,7 @@ jobs:
 
     - name: Build and analyze
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         DATASOURCE_URL: ${{ secrets.DATASOURCE_URL }}
         DATASOURCE_USERNAME: ${{ secrets.DATASOURCE_USERNAME }}
@@ -54,20 +55,42 @@ jobs:
         MP_WEBHOOK: ${{ secrets.MP_WEBHOOK }}
         MP_TOKEN: ${{ secrets.MP_TOKEN }}
       run: mvn -B package --file pom.xml && mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=posgraduacao342_tech-challenge
+      
 
     - name: Configure AWS credentials
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
+        
+    - name: Login to Amazon ECR
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v2
+
+    - name: Create ECR if not exists
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      run: |
+        aws ecr create-repository --repository-name tech-challenge-ecr || exit 0
+
+    - name: Build, tag, and push image to Amazon ECR
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: tech-challenge-ecr
+        IMAGE_TAG: ${{ github.sha }}
+      run: |
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:latest -f docker/Dockerfile .
+        docker push -a $ECR_REGISTRY/$ECR_REPOSITORY
 
     - name: Configure kubectl
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: |
-        aws eks --region us-east-1 update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }}
-
+        aws eks update-kubeconfig --name tech-challenge-cluster --region us-east-1
+      
     - name: Deploy to EKS
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: |
-        kubectl apply -f pipeline/dev/application/deployment.yaml
+        kubectl apply -f $GITHUB_WORKSPACE/pipeline/dev/application
