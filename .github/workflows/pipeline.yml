@@ -22,14 +22,14 @@ jobs:
         distribution: 'temurin'
         cache: maven
         
-    - name: Build with Maven
-      env:
-        DATASOURCE_URL: ${{ secrets.DATASOURCE_URL }}
-        DATASOURCE_USERNAME: ${{ secrets.DATASOURCE_USERNAME }}
-        DATASOURCE_PASSWORD: ${{ secrets.DATASOURCE_PASSWORD }}
-        MP_WEBHOOK: ${{ secrets.MP_WEBHOOK }}
-        MP_TOKEN: ${{ secrets.MP_TOKEN }}
-      run: mvn -B package --file pom.xml
+    # - name: Build with Maven
+    #   env:
+    #     DATASOURCE_URL: ${{ secrets.DATASOURCE_URL }}
+    #     DATASOURCE_USERNAME: ${{ secrets.DATASOURCE_USERNAME }}
+    #     DATASOURCE_PASSWORD: ${{ secrets.DATASOURCE_PASSWORD }}
+    #     MP_WEBHOOK: ${{ secrets.MP_WEBHOOK }}
+    #     MP_TOKEN: ${{ secrets.MP_TOKEN }}
+    #   run: mvn -B package --file pom.xml
 
     - name: Cache SonarCloud packages
       uses: actions/cache@v3
@@ -45,20 +45,20 @@ jobs:
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
         restore-keys: ${{ runner.os }}-m2
 
-    - name: Build and analyze
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        DATASOURCE_URL: ${{ secrets.DATASOURCE_URL }}
-        DATASOURCE_USERNAME: ${{ secrets.DATASOURCE_USERNAME }}
-        DATASOURCE_PASSWORD: ${{ secrets.DATASOURCE_PASSWORD }}
-        MP_WEBHOOK: ${{ secrets.MP_WEBHOOK }}
-        MP_TOKEN: ${{ secrets.MP_TOKEN }}
-      run: mvn -B package --file pom.xml && mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=posgraduacao342_tech-challenge
+    # - name: Build and analyze
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+    #     DATASOURCE_URL: ${{ secrets.DATASOURCE_URL }}
+    #     DATASOURCE_USERNAME: ${{ secrets.DATASOURCE_USERNAME }}
+    #     DATASOURCE_PASSWORD: ${{ secrets.DATASOURCE_PASSWORD }}
+    #     MP_WEBHOOK: ${{ secrets.MP_WEBHOOK }}
+    #     MP_TOKEN: ${{ secrets.MP_TOKEN }}
+    #   run: mvn -B package --file pom.xml && mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=posgraduacao342_tech-challenge
       
 
     - name: Configure AWS credentials
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      # if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -66,17 +66,17 @@ jobs:
         aws-region: us-east-2
         
     - name: Login to Amazon ECR
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      # if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v2
 
     - name: Create ECR if not exists
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      # if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: |
         aws ecr create-repository --repository-name tech-challenge-ecr || exit 0
 
     - name: Build, tag, and push image to Amazon ECR
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      # if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: tech-challenge-ecr
@@ -86,12 +86,12 @@ jobs:
         docker push -a $ECR_REGISTRY/$ECR_REPOSITORY
 
     - name: Configure kubectl
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      # if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: |
         aws eks update-kubeconfig --name tech-challenge-cluster --region us-east-2
       
     - name: Deploy to EKS
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      # if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: |
         kubectl apply -f $GITHUB_WORKSPACE/pipeline/dev/application
         helm repo add eks https://aws.github.io/eks-charts
