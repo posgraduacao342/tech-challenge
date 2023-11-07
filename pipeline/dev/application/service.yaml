@@ -3,11 +3,10 @@ kind: Service
 metadata:
   name: tech-challenge-service
 spec:
-  type: LoadBalancer
-  selector:
-    app: tech-challenge
   ports:
-    - protocol: TCP
-      port: 80
+    - port: 80
       targetPort: 8080
-      nodePort: 30001
+      protocol: TCP
+  type: NodePort
+  selector:
+    app.kubernetes.io/name: tech-challenge
