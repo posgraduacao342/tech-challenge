@@ -8,7 +8,7 @@ on:
     branches: [main]
 
 jobs:
-  build_and_analysis:
+  build_analysis_and_deploy:
 
     runs-on: ubuntu-latest
 
