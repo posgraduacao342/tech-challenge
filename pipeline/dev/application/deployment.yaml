@@ -1,15 +1,22 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: tech-challenge
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: tech-challenge
-  labels:
-    app: tech-challenge
+  namespace: tech-challenge
+  name: tech-challenge-deployment
 spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: tech-challenge-api
   template:
     metadata:
       name: tech-challenge
       labels:
-        app: tech-challenge
+        app.kubernetes.io/name: tech-challenge-api
     spec:
       containers:
         - name: tech-challenge-api
@@ -54,6 +61,3 @@ spec:
               value: "https://f0d6-45-230-103-240.ngrok-free.app/pagamentos/mercado-pago/webhooks"
 
   replicas: 2
-  selector:
-    matchLabels:
-      app: tech-challenge
