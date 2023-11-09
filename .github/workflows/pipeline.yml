@@ -84,13 +84,3 @@ jobs:
       run: |
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:latest -f docker/Dockerfile .
         docker push -a $ECR_REGISTRY/$ECR_REPOSITORY
-
-    - name: Configure kubectl
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      run: |
-        aws eks update-kubeconfig --name tech-challenge-cluster --region us-east-1
-      
-    - name: Deploy to EKS
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      run: |
-        kubectl apply -f $GITHUB_WORKSPACE/pipeline/dev/application
